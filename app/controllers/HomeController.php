@@ -2,10 +2,6 @@
 
 class HomeController extends BaseController {
 
-    function __construct() {
-        $this->beforeFilter('auth');
-    }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -20,9 +16,9 @@ class HomeController extends BaseController {
     |
     */
 
-	public function showWelcome()
-	{
-		return View::make('hello');
+	public function getIndex(){
+        return View::make('home.index-demo')->with('ucs',UserCategories::all());//->with('events',$events);
+		//return View::make('home.index-demo');
 	}
 
 

@@ -15,7 +15,9 @@ Route::get('/admin/login','SessionsController@login');
 Route::get('/admin/logout','SessionsController@destroy');
 Route::resource('sessions', 'SessionsController');
 
-Route::get('/', function()
+Route::get('/','HomeController@getIndex');
+
+Route::get('/older', function()
 {
     if(Input::has('search')){
         $query = Input::get('search');

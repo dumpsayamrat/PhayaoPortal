@@ -53,7 +53,6 @@
             </div>
         </div>
     </nav>
-
 </header>
 {{--<progress value="0"></progress>--}}
 <!-- end navigation -->
