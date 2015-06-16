@@ -32,7 +32,18 @@
             <img style="" class="img img-responsive" src="images/logo20.png" height="50">
         </a>
         </div>
+        <div class="weather" id="weather">
+            <div class="currently">
+                <div class="icon current-icon icon-27"></div>
+                <div class="current-conditions">
+                    <div class="current-loc"> พะเยา,ประเทศไทย </div>
+                    <div class="current-temp"></div>
+                    <span class="current-desc"></span>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
@@ -41,9 +52,7 @@
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <button type="button" class="navbar-toggle" id="search-collapse">
-                        <i class="fa fa-search"></i>
-                    </button>
+
                     <div class="visible-xs nav-logo">
                         <a href="http://{{ Request::getHttpHost() }}">
                             <img class="img img-responsive" src="images/logo21.png" height="50">
@@ -62,7 +71,7 @@
                         <li><a href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
                         <li><a href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
                         <li><a href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-                        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิยาลัยพะเยา</span></a></li>
+                        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
                         <li class="hidden-xs"><a id="toggle-search" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
                     </ul>
                 </div>
@@ -70,40 +79,69 @@
             </div>
         </div>
     </nav>
-    <div id="search-form" class="search">
-        <div class="container">
-            <div class="search-label">
-                <h1>
-                    ค้นหา :
-                </h1>
-            </div>
-            <form action="">
-                <fieldset>
-                    <input name="search-terms" type="search" placeholder="" />
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                    {{--<input type="submit" value="Ok" />--}}
-                </fieldset>
-            </form>
-
-        </div>
-    </div>
 </header>
-<div id="menu-slide" class="slideout-menu">
+<div id="search-form" class="search open">
+    <div class="container">
+        <div class="search-label">
+            <h1>
+                ค้นหา :
+            </h1>
+        </div>
+        <form action="">
+            <fieldset>
+                <input name="search-terms" type="search" placeholder="" />
+                <button type="submit"><i class="fa fa-search"></i></button>
+                {{--<input type="submit" value="Ok" />--}}
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+
+{{--<div id="menu-slide" class="slideout-menu">
     <h3>Menu <a href="#" class="slideout-menu-toggle"><i class="fa fa-times"></i></a></h3>
     <ul>
         <li><a href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
         <li><a href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
         <li><a href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิยาลัยพะเยา</span></a></li>
+        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
         <li class=""><a id="toggle-search-menu" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
     </ul>
-</div>
+</div>--}}
 
 <div class="layout-content">
 @yield('content')
 </div>
-<div class="menu-button"><i class="fa fa-bars fa-3x"></i> </div>
-<div id="back-top">Back to top</div>
+<ul class="menu-button">
+    <a class="menu menu-gov" href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}">
+        <li class="menu-item">
+            {{----}}
+            <img class="menu-img" src="/images/gov1.png">
+            <span href="#3rd" class="menu-title">หน่วยงานราชการ</span>
+            {{--as--}}
+        </li>
+    </a>
+    <a class="menu menu-travel" href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}">
+    <li class="menu-item ">
+        {{----}}
+            <img class="menu-img" src="/images/traveler2.png">
+            <span href="#2nd" class="menu-title">ท่องเที่ยว</span>
+        {{----}}
+    </li>
+    </a>
+
+    <a class="menu menu-uni" href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}">
+        <li class="menu-item">
+            {{----}}
+            <img class="menu-img" src="/images/university3.png">
+            <span href="#3rd" class="menu-title">มหาวิทยาลัย</span>
+            {{--as--}}
+        </li>
+    </a>
+    <li id="back-top" class="menu-item">
+        <i class="fa fa-arrow-up fa-2x"></i>
+    </li>
+</ul>
 
 <footer class="">
     <div class="container">
@@ -138,11 +176,60 @@
 <script type="text/javascript" src="js/custom.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.simpleWeather.js"></script>
 
 <script>
-    $(document).ready(function () {
-
-
+    var currentlyDesc = [
+            'พายุเทอร์นาโด',
+            'พายุโซนร้อน',
+            'พายุเฮอริเคน',
+            'พายุรุนแรง',
+            'พายุฝนฟ้าคะนอง',
+            'ฝนและหิมะ',
+            'ฝนและลูกเห็บ',
+            'หิมะและลูกเห็บ',
+            'ฝนตกปรอยๆ',
+            'ฝนตกปรอยๆ',
+            'ฝนตกปรอยๆ',
+            'ฝนตกหนัก',
+            'ฝนตกหนัก',
+            'ละอองหิมะ',
+            'อาบน้ำหิมะ',
+            'หิมะพัด',
+            'หิมะ',
+            'ลูกเห็บ',
+            'ลูกเห็บ',
+            'ฝุ่น',
+            'มีหมอกหนา',
+            'หมอกควัน',
+            'ควัน',
+            'ลมพัด',
+            'มีลมแรง',
+            'เย็น',
+            'มีเมฆมาก',
+            'มีเมฆเป็นส่วนใหญ่',
+            'มีเมฆเป็นส่วนใหญ่',
+            'มีเมฆบางส่วน',
+            'มีเมฆบางส่วน',
+            'ท้องฟ้าโปร่ง',
+            'มีแดด ,แดดจัด',
+            'ท้องฟ้าโปร่ง',
+            'ท้องฟ้าโปร่ง',
+            'ฝนและลูกเห็บ',
+            'อากาศร้อน',
+            'ฝนฟ้าคะนอง',
+            'พายุฝนฟ้าคะนองกระจายอยู่',
+            'พายุฝนฟ้าคะนองกระจายอยู่',
+            'ฝนบางส่วน',
+            'หิมะตกหนัก',
+            'หิมะกระจัดกระจาย',
+            'หิมะตกหนัก',
+            'มีเมฆบางส่วน',
+            'มีฝนฟ้าคะนอง',
+            'หิมะ',
+            'ฝนฟ้าคะนอง'
+    ];
+  /*  $(document).ready(function () {
         $('#toggle-search-menu').on('click', function(event){
             event.preventDefault();
             // create menu variables
@@ -166,7 +253,7 @@
             var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
             if (!isMobile.matches) {
-                $('#search-form, #toggle-search').toggleClass('open');
+                $('menu-button-form, #toggle-search').toggleClass('open');
             }else{
                 $('#search-form, #toggle-search').toggleClass('open show');
             }
@@ -218,7 +305,7 @@
             }
         });
 
-    });
+    });*/
     /*$(document).on('click',function(event) {
         var target = $(event.target);
         if (!target.is('.slideout-menu')) {
@@ -342,7 +429,7 @@
         });
 
     });
-    (function($) {
+    /*(function($) {
 
         // Handle click on toggle search button
         $('#toggle-search').click(function() {
@@ -380,7 +467,7 @@
                 return false;
         });
 
-    })(jQuery);
+    })(jQuery);*/
     $('#myTab a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
@@ -388,6 +475,54 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    var wUnit = '';
+    weather('Phayao', ' ', "c");
+    // Get the Weather!
+    function weather(location, woeid, unit) {
+        $.simpleWeather({
+            location: location,
+            woeid: woeid,
+            unit: unit,
+            success: function(w) {
+                //$('.loading').fadeOut();
+
+                // Style background for hot/cold temps
+                if (w.units.temp === 'F') {
+                    if (w.temp > 80) {
+                        $('body').addClass('hot').removeClass('cold');
+                    } else if (w.temp < 40) {
+                        $('body').addClass('cold').removeClass('hot');
+                    } else {
+                        $('body').removeClass('hot cold');
+                    }
+                }
+
+                // If there isn't a region, show the country instead
+                if (w.region === '') {
+                    w.region = w.country;
+                }
+
+                // Current conditions data
+                //var displayLoc = w.city + ', ' + w.region;
+                //$(".city h1").html(displayLoc);
+                for(var i=0;i<currentlyDesc.length;i++){
+                    if(i== w.code){
+                        w.currently=currentlyDesc[i];
+                    }
+                }
+                $('.current-icon').addClass('icon-' + w.code);
+                $('.current-temp').html(w.temp + ''+' ~ '+w.high + '&deg;'+ w.units.temp);
+                $('.current-desc').html(w.currently);
+            },
+            error: function(error) {
+                $(".weather").html('<p>' + error + '</p>');
+            }
+
+        });
+
+    };
+
 
 
 
