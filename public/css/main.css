@@ -1511,9 +1511,12 @@ nav{
     background: url("/images/search.png");
 }
 
-a:focus:not(.a-tab):not(a.menu), input:focus, button:focus, textarea:focus, select:focus, a:active:not(.a-tab):not(a.menu), input:active, button:active, textarea:active, select:active,
+a:focus:not(.a-tab), input:focus, button:focus, textarea:focus, select:focus, a:active:not(.a-tab), input:active, button:active, textarea:active, select:active,
 .currently:focus,.currently:active{
     outline: #ff8c00 solid 3px;
+}
+a.menu:focus,a.menu:active{
+    outline: none;
 }
 #back-top{
     /*background: #f4726d;

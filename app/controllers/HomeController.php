@@ -77,4 +77,12 @@ class HomeController extends BaseController {
         Session::flash('word',Input::get('search'));
         return View::make('home.event');
     }
+
+    public function postFrequency(){
+        if(Request::ajax()){
+            $link=Link::where('link', '=', Input::get('link'))->firstOrFail();
+            $link->frequency = $link->frequency+1;
+            $link->save();
+        }
+    }
 }

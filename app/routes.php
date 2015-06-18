@@ -16,6 +16,7 @@ Route::get('/admin/logout','SessionsController@destroy');
 Route::resource('sessions', 'SessionsController');
 
 Route::get('/','HomeController@getIndex');
+Route::post('/addfrequency','HomeController@postFrequency');
 
 Route::get('/older', function()
 {

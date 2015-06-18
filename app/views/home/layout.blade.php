@@ -314,7 +314,21 @@
     });*/
 
     $(document).on('ready', function(event) {
+        $('a[target=_blank]').click(function(e){
+           // return false;
 
+            var root = location.protocol + '//' + location.host;
+            //alert(root+'/addfrequency1');
+            $.ajax({
+                url:root+'/addfrequency',
+                data : { link:e.currentTarget.href},
+                method:'POST',
+                success:function(data){
+                    //alert('done');
+                }
+            });
+
+        });
         $('#back-top').click(function(){
             event.preventDefault();
             $('html, body').animate({scrollTop:0}, 'slow');

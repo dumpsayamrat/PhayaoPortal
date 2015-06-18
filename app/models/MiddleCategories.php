@@ -17,7 +17,7 @@ class MiddleCategories extends Eloquent {
 
     public function Link(){
 
-        return $this->hasMany("Link");
+        return $this->hasMany("Link")->orderBy('frequency','DESC');
 
     }
 }
