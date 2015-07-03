@@ -55,7 +55,7 @@
             <td class="collapsing">{{ $event->start }}</td>
             <td class="collapsing">{{ $event->finish }}</td>
             <td>
-                <i class="search teal icon"></i>
+                <a href="/admin/events/{{$event->id}}/show"><i class="search teal icon"></i></a>
                 <a href="/admin/events/{{$event->id}}/update"><i class="configure teal icon"></i></a>
                 <a class="del" href="/admin/events/{{ $event->id }}/delete"><i class="remove teal icon"></i></a>
             </td>

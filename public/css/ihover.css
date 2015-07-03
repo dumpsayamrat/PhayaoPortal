@@ -215,12 +215,13 @@
     left: -4px;
     padding: 0;
     z-index: 10;
-    border: 4px dashed #f5008a;
+    border: 4px dashed #E91E63;
 }
 
 .hi-icon-effect-4 .hi-icon:hover {
     box-shadow: 0 0 0 0 rgba(255,255,255,0);
-    color: #f5008a;
+    color: #0000000;
+    cursor: default;
 }
 
 /* Effect 4b */

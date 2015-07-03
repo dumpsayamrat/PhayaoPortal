@@ -35,10 +35,10 @@
                 <div class="ui vertical red menu">
 
                     <a class="{{ Request::path()=='admin/manage' ? 'active' : '' }} item" href="{{ URL::to('/admin/manage') }}">
-                        <i class="grid layout icon"></i> จัดการจุดเชื่อมต่อภายนอก
+                        <i class="grid layout icon"></i> จัดการจุดเชื่อมโยง
                     </a>
                     <a class="{{ Request::path()=='admin/link/create' ? 'active' : '' }} item" href="{{ URL::to('/admin/link/create') }}">
-                        <i class="add square icon"></i> เพิ่มจุดเชื่อมต่อภายนอก
+                        <i class="add square icon"></i> เพิ่มจุดเชื่อมโยง
                     </a>
                     <hr style="background-color: rgb(224, 55, 75);height: 3px">
                     {{--EVENTS--}}
@@ -47,6 +47,22 @@
                     </a>
                     <a class="{{ Request::path()=='admin/events/create' ? 'active' : '' }} item" href="{{ URL::to('/admin/events/create') }}">
                         <i class="add square icon"></i> เพิ่มกิจกรรม
+                    </a>
+                    <hr style="background-color: rgb(224, 55, 75);height: 3px">
+                    {{--Gov--}}
+                    <a class="{{ Request::path()=='admin/gov/manage' ? 'active' : '' }} item" href="{{ URL::to('/admin/gov/manage') }}">
+                        <i class="grid layout icon"></i> จัดการหน่วยงาน
+                    </a>
+                    <a class="{{ Request::path()=='admin/gov/create' ? 'active' : '' }} item" href="{{ URL::to('/admin/gov/create') }}">
+                        <i class="add square icon"></i> เพิ่มหน่วยงาน
+                    </a>
+                    <hr style="background-color: rgb(224, 55, 75);height: 3px">
+                    {{--Recommend--}}
+                    <a class="{{ Request::path()=='admin/recommend/manage' ? 'active' : '' }} item" href="{{ URL::to('/admin/recommend/manage') }}">
+                        <i class="grid layout icon"></i> จัดการ&nbsp;จุดเชื่อมโยงแนะนำ
+                    </a>
+                    <a class="{{ Request::path()=='admin/recommend/create' ? 'active' : '' }} item" href="{{ URL::to('/admin/recommend/create') }}">
+                        <i class="add square icon"></i> เพิ่ม&nbsp;จุดเชื่อมโยงแนะนำ
                     </a>
                     <hr style="background-color: rgb(224, 55, 75);height: 3px">
                     <a class="{{ Request::path()=='admin/logout' ? 'active' : '' }} red item" href="{{ URL::to('/admin/logout') }}">

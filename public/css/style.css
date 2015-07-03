@@ -36,3 +36,17 @@ body
 .ui.grid{
     font-size: initial;
 }
+.description{
+    position: relative;
+    float: left;
+}
+.clearing{
+    clear: both;
+}
+b{
+    font-size: 1.18rem;
+    font-weight: 200;
+}
+.title h1{
+    border-bottom: 1px solid #E5DCDF;
+}

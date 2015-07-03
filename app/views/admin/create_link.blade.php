@@ -28,7 +28,7 @@
     </style>
     {{-- <div class="ui page grid">--}}
 
-                    <h1><i class="big settings teal icon"></i> เพิ่มจุดเชื่อมต่อภายนอก</h1>
+                    <h1><i class="big settings teal icon"></i> เพิ่มจุดเชื่อมโยง</h1>
 
                     {{ Form::open(array('url' => '/admin/link/create?form=form_main','class' => 'ui warning form teal segment','files'=>true)) }}
                         @if(!$errors->isEmpty())
@@ -43,11 +43,11 @@
                         @endif
                         <div class="two fields">
                             <div class="required field">
-                                {{ Form::label('name','ชื่อจุดเชื่อมต่อภายนอก') }}
-                                {{ Form::text('name',null,['placeholder'=>'ชื่อจุดเชื่อมต่อภายนอก']) }}
+                                {{ Form::label('name','ชื่อจุดเชื่อมโยง') }}
+                                {{ Form::text('name',null,['placeholder'=>'ชื่อจุดเชื่อมโยง']) }}
                             </div>
                             <div class="required field">
-                                {{ Form::label('link','ที่อยู่จุดเชื่อมต่อภายนอก') }}
+                                {{ Form::label('link','ที่อยู่จุดเชื่อมโยง') }}
                                 {{ Form::text('link',null,['placeholder'=>'Link address']) }}
                             </div>
                         </div>
@@ -65,7 +65,6 @@
                             {{ Form::label('majorcategories','หมวดหมู่หลัก') }}
                             <select class="ui" name="majorcategories" id="majorcategories">
                                 <option value=""></option>
-
                             </select>
                             <a id="add_mjc" class="ui tag blue label">จัดการ</a>
                         </div>
@@ -77,16 +76,25 @@
                             </select>
                             <a id="add_mdc" class="ui tag blue label">จัดการ</a>
                         </div>
-
+                        <div class="ui field segment">
+                            <div class="ui checkbox">
+                                <input id="gov" type="checkbox" name="gov">
+                                <label>เลือกหน่วยงาน</label>
+                            </div>
+                            <div id="gov_id" style="display: none" class="ui field segment">
+                                {{ Form::label('gov_id','เลือกหน่วยงาน') }}
+                                {{ Form::select('gov_id',$goverment,array('class' => 'ui dropdown')) }}
+                            </div>
+                        </div>
                         <div class="field">
                             {{ Form::label('descript','คำอธิบาย') }}
                             {{ Form::textarea('descript') }}
                         </div>
 
-                        <div class="required field">
+                        {{--<div class="required field">
                             {{ Form::label('img','รูปภาพ') }}
                             {{ Form::file('img') }}
-                        </div>
+                        </div>--}}
                         {{ Form::submit('เพิ่ม',array('class'=>'ui submit teal button')) }}
 
                     {{ Form::close() }}
@@ -294,6 +302,15 @@
 @stop
 @section('javascript')
     <script>
-        runUc('#usercategories');
+        $(document).on('ready', function() {
+            runUc('#usercategories');
+            $('#gov').change(function(){
+                if($('#gov').is(':checked')){
+                    $('#gov_id').fadeIn('slow');
+                }else{
+                    $('#gov_id').fadeOut('slow');
+                }
+            });
+        });
     </script>
     @stop

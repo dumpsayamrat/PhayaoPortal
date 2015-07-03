@@ -9,43 +9,46 @@
 <html lang="en">
 
 <head>
+    @yield('head')
+
     <meta charset="utf-8">
-    <title>Portal PHAYAO v2</title>
+    <title>PHAYAO Portal</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="">
     <meta name="description" content="">
     {{--<link rel="icon" type="image/png" href="images/favicon.png">--}}
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/ihover.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/ihover.css">
+    <link rel="stylesheet" href="/css/main.css">
+
 </head>
 <body>
 <header class="p-header site-header" id="header">
-    <div class="container head-logo hidden-xs">
+    <div id="headd" class="container head-logo hidden-xs">
         <div class="ct-logo">
         <a href="http://{{ Request::getHttpHost() }}">
             {{--<img style="max-width:35px;float: left;" class="img img-responsive" src="images/logo21.png" height="50">--}}
-            <img style="" class="img img-responsive" src="images/logo20.png" height="50">
+            <img style="" class="img img-responsive" src="/images/logo20.png" height="50">
         </a>
         </div>
         <div class="weather" id="weather">
-            <div class="currently">
+            <a href="https://weather.yahoo.com/thailand/phayao/phayao-1226090/" class="currently">
                 <div class="icon current-icon icon-27"></div>
                 <div class="current-conditions">
                     <div class="current-loc"> พะเยา,ประเทศไทย </div>
                     <div class="current-temp"></div>
                     <span class="current-desc"></span>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav id="nav" class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
@@ -55,8 +58,8 @@
 
                     <div class="visible-xs nav-logo">
                         <a href="http://{{ Request::getHttpHost() }}">
-                            <img class="img img-responsive" src="images/logo21.png" height="50">
-                            <img class="img img-responsive" src="images/logo20.png" height="50">
+                            <img class="img img-responsive" src="/images/logo21.png" height="50">
+                            <img class="img img-responsive" src="/images/logo20.png" height="50">
                         </a>
                     </div>
 
@@ -65,14 +68,14 @@
                 <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="nav navbar-nav">
                         {{--<li><span></span><a href="http://{{ Request::getHttpHost() }}" class="home">หน้าแรก</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}" class="about">หน่วยงานราชการ</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}" class="portfolio">มหาวิยาลัยพะเยา</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}" class="map">ท่องเที่ยว</a></li>--}}
-                        <li><a href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
-                        <li><a href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
-                        <li><a href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-                        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
-                        <li class="hidden-xs"><a id="toggle-search" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
+                        <li><span></span><a href="{{ Request::path()=='' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}" class="about">หน่วยงานราชการ</a></li>
+                        <li><span></span><a href="{{ Request::path()=='' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}" class="portfolio">มหาวิยาลัยพะเยา</a></li>
+                        <li><span></span><a href="{{ Request::path()=='' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}" class="map">ท่องเที่ยว</a></li>--}}
+                        <li><a id="tab-home" href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
+                        <li><a id="tab-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
+                        <li><a id="tab-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
+                        <li><a id="tab-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
+                        <li><a href="{{'http://'.Request::getHttpHost().'/events'}}"><span class="ihome-event home">กิจกรรม</span></a></li>
                     </ul>
                 </div>
 
@@ -87,9 +90,9 @@
                 ค้นหา :
             </h1>
         </div>
-        <form action="">
+        <form id="auto-search">
             <fieldset>
-                <input name="search-terms" type="search" placeholder="" />
+                <input id="search-terms" name="search-terms" type="search" placeholder="" />
                 <button type="submit"><i class="fa fa-search"></i></button>
                 {{--<input type="submit" value="Ok" />--}}
             </fieldset>
@@ -102,42 +105,65 @@
     <h3>Menu <a href="#" class="slideout-menu-toggle"><i class="fa fa-times"></i></a></h3>
     <ul>
         <li><a href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
+        <li><a href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
+        <li><a href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
+        <li><a href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
         <li class=""><a id="toggle-search-menu" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
     </ul>
 </div>--}}
+<div class="nav-menu">
+    <ul class="menu">
+        <li class="">
+            <a class="menu-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}">
+                <img class="menu-img" src="/images/gov1.png">
+                <span href="#e-services" class="menu-title">หน่วยงานราชการ</span>
+            </a>
+        </li>
 
-<div class="layout-content">
+        <li class="">
+            <a class="menu-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}">
+                <img class="menu-img" src="/images/traveler2.png">
+                <span href="#trip" class="menu-title">ท่องเที่ยว</span>
+            </a>
+        </li>
+
+        <li class="">
+            <a class="menu-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}">
+                <img class="menu-img" src="/images/university3.png">
+                <span href="#e-services" class="menu-title">มหาวิทยาลัย</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="layout-content" class="layout-content">
 @yield('content')
 </div>
 <ul class="menu-button">
-    <a class="menu menu-gov" href="{{ Request::path()=='/' ? '#3rd' : 'http://'.Request::getHttpHost().'/#3rd' }}">
+    {{--<a class="menu menu-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}">
         <li class="menu-item">
-            {{----}}
+            --}}{{----}}{{--
             <img class="menu-img" src="/images/gov1.png">
-            <span href="#3rd" class="menu-title">หน่วยงานราชการ</span>
-            {{--as--}}
+            <span href="#e-services" class="menu-title">หน่วยงานราชการ</span>
+            --}}{{--as--}}{{--
         </li>
     </a>
-    <a class="menu menu-travel" href="{{ Request::path()=='/' ? '#2nd' : 'http://'.Request::getHttpHost().'/#2nd' }}">
+    <a class="menu menu-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}">
     <li class="menu-item ">
-        {{----}}
+        --}}{{----}}{{--
             <img class="menu-img" src="/images/traveler2.png">
-            <span href="#2nd" class="menu-title">ท่องเที่ยว</span>
-        {{----}}
+            <span href="#trip" class="menu-title">ท่องเที่ยว</span>
+        --}}{{----}}{{--
     </li>
     </a>
 
-    <a class="menu menu-uni" href="{{ Request::path()=='/' ? '#1st' : 'http://'.Request::getHttpHost().'/#1st' }}">
+    <a class="menu menu-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}">
         <li class="menu-item">
-            {{----}}
+            --}}{{----}}{{--
             <img class="menu-img" src="/images/university3.png">
-            <span href="#3rd" class="menu-title">มหาวิทยาลัย</span>
-            {{--as--}}
+            <span href="#e-services" class="menu-title">มหาวิทยาลัย</span>
+            --}}{{--as--}}{{--
         </li>
-    </a>
+    </a>--}}
     <li id="back-top" class="menu-item">
         <i class="fa fa-arrow-up fa-2x"></i>
     </li>
@@ -149,8 +175,8 @@
             <div style="text-align: -webkit-center;" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                 <div class="foot-logo">
                     <a href="http://{{ Request::getHttpHost() }}">
-                        <img style="max-width: 49px;float: left;" class="img img-responsive" src="images/Untitled.png" height="50">
-                        <img style="" class="img img-responsive" src="images/logo12.png" height="50">
+                        <img style="max-width: 49px;float: left;" class="img img-responsive" src="/images/Untitled.png" height="50">
+                        <img style="" class="img img-responsive" src="/images/logo12.png" height="50">
                     </a>
                 </div>
             </div>
@@ -171,14 +197,131 @@
 
 {{--start javascrict--}}
 
-<script src="js/jquery.js"></script>
-<script src="js/jquery.simple-text-rotator.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.simpleWeather.js"></script>
-
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.simple-text-rotator.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.simpleWeather.js"></script>
+@yield('javascript')
 <script>
+    var root = location.protocol + '//' + location.host;
+    var input=0;
+    function runAutoComplete(){
+        $('#search-terms').autocomplete({
+            source: root+'/search',
+            minLenght:2,
+            focus: function(e,ui){
+                $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
+            },
+            select : function(e,ui){
+                $.ajax(
+                        {
+                            url: root+'/search/str/'+ui.item.value+'/keywords_top',
+                            type: 'GET'
+                            //dataType: 'html',
+                            //data: {id: selected}
+                        }).done(
+                        function(data)
+                        {                        //console.log( data );
+                            $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
+                        }
+                );
+            },
+            open: function(event, ui) {
+                $("#ui-autocompelte").css("z-index", 1000);
+            }
+        });
+    }
+
+    $(document).on('ready', function(event) {
+        //runAutoComplete();
+        /*//* submit search  */
+        $('#auto-search').submit(function(e){
+            $('.ui-autocomplete').css("display","none");
+            $.ajax(
+                    {
+                        url: root+'/search/str/'+e.currentTarget[1].value+'/keywords_top',
+                        type: 'GET'
+                        //dataType: 'html',
+                        //data: {id: selected}
+                    }).done(
+                    function(data)
+                    {
+                        $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
+                    }
+            );
+            e.preventDefault();
+        });
+
+        /* search autocomplete */
+        $('input[type=search]').focus(function()
+        {
+                $('input[type=search]').on('keypress keyup',function(e){
+
+                    if(!input==1){
+                        //console.log(this.value);
+
+                            $('html, body').animate(
+                                    {scrollTop:150},
+                                    'slow',
+                                    function(){
+                                        if($(window).scrollTop() == 150){
+                                            $('#headd').css("display", "none");
+                                            $(window).scrollTop(0);
+                                        }
+                                        runAutoComplete();
+                                        /* ajax .load */
+                                        var content = '<?php echo URL::to('/search/str/-11111/keywords_top'); ?>';
+                                        $.ajax(
+                                                {
+                                                    url: content,
+                                                    type: 'GET'
+                                                    //dataType: 'html',
+                                                    //data: {id: selected}
+                                                }).done(
+                                                function(data)
+                                                {
+                                                    $('#tab-gov').click(function(){
+                                                        window.location.href = root+"/?#e-services";
+                                                        //window.location.replace();
+                                                    });
+                                                    $('#tab-travel').click(function(){
+                                                        window.location.href = root+"/?#trip";
+                                                        //window.location.replace();
+                                                    });
+                                                    $('#tab-uni').click(function(){
+                                                        window.location.href = root+"/?#up";
+                                                        //window.location.replace();
+                                                    });
+                                                    $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
+                                                    $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
+                                                    $('input[type=search]').on('keypress keyup',function(e){
+                                                        $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
+                                                    });
+                                                    //console.log(root+'/search/str/-11111/keywords_top');
+
+                                                }
+                                        );
+
+                                    }
+                            );
+
+                    }
+                    if(e.keyCode==8&&!this.value ){
+                        //console.log( "backspace" );
+                    }
+                    input=1;
+
+                    /* */
+
+                    /* if(e.keyCode==8){
+                     console.log( "backspaceeeeeeeeeeeeeeeeeeeeeeeeeeeee" );
+                     }*/
+                });
+
+        });
+    });
     var currentlyDesc = [
             'พายุเทอร์นาโด',
             'พายุโซนร้อน',
@@ -198,7 +341,7 @@
             'หิมะพัด',
             'หิมะ',
             'ลูกเห็บ',
-            'ลูกเห็บ',
+            'หิมะฝน',
             'ฝุ่น',
             'มีหมอกหนา',
             'หมอกควัน',
@@ -312,10 +455,36 @@
             $('.slideout-menu').toggleClass('open');
         }
     });*/
+    // Custom autocomplete instance.
+    $.widget( "app.autocomplete", $.ui.autocomplete, {
 
+        // Which class get's applied to matched text in the menu items.
+        options: {
+            highlightClass: "ui-state-highlight"
+        },
+
+        _renderItem: function( ul, item ) {
+
+            // Replace the matched text with a custom span. This
+            // span uses the class found in the "highlightClass" option.
+            var re = new RegExp( "(" + this.term + ")", "gi" ),
+                    cls = this.options.highlightClass,
+                    template = "<span class='" + cls + "'>$1</span>",
+                    label = item.label.replace( re, template ),
+                    $li = $( "<li/>" ).appendTo( ul );
+
+            // Create and return the custom menu item content.
+            $( "<a/>" ).attr( "href", "#" )
+                    .html( label )
+                    .appendTo( $li );
+
+            return $li;
+
+        }
+
+    });
     $(document).on('ready', function(event) {
         $('a[target=_blank]').click(function(e){
-           // return false;
 
             var root = location.protocol + '//' + location.host;
             //alert(root+'/addfrequency1');
@@ -363,6 +532,7 @@
         };
         $('#search').autocomplete({
             source:'search',
+            highlightClass: "bold-text",
             minLenght:2,
             select : function(e,ui){
                 window.open(ui.item.link, '_blank');
@@ -377,11 +547,12 @@
         };
         /// Back to top
         $('#back-top').hide();
-        $('.menu-button').hide();
+        $('.nav-menu').hide();
         $(window).scroll(function(){
-            if($(window).scrollTop() >= 700)
+            if($(window).scrollTop() >= 350)
             {
-                $('#back-top').fadeIn(500);
+                $('#back-top').fadeIn(1);
+                $('.nav-menu').fadeIn(1);
                 if (!$('.slideout-menu').hasClass("open")) {
                     $('.menu-button').fadeIn(500);
                 }
@@ -389,6 +560,7 @@
             else
             {
                 $('#back-top').fadeOut(500);
+                $('.nav-menu').fadeOut(500);
                 if (!$('.slideout-menu').hasClass("open")) {
                     $('.menu-button').fadeOut(500);
                 }
@@ -408,7 +580,7 @@
 
         $w.scroll(function(){
             nav.css({
-                background: '#f5008a'
+                background: '#E91E63'
             });
             var scrollTop = $w.scrollTop();
             var shouldBeFixed = scrollTop > navHomeY;
@@ -418,7 +590,7 @@
                     width: '100%',
                     top: 0,
                     opacity: 0.9,
-                    background: '#f5008a'
+                    background: '#E91E63'
                 });
 
                 content.css({
@@ -431,7 +603,7 @@
                 nav.css({
                     position: 'relative',
                     width: '100%',
-                    opacity: 0.9,background: '#f5008a'
+                    opacity: 0.9,background: '#E91E63'
                 });
 
                 content.css({
@@ -483,8 +655,8 @@
 
     })(jQuery);*/
     $('#myTab a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
+        e.preventDefault();
+        $(this).tab('show');
     });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();

@@ -95,7 +95,7 @@ class AdminController extends BaseController {
             });
             //var_dump($archivo);
 
-            $destinationPath = '/uploads/events/';
+            $destinationPath = 'uploads/events/';
             // Move file to generated folder
             $check = $file->move($destinationPath, $archivo);
 
@@ -107,6 +107,14 @@ class AdminController extends BaseController {
                 $event->finish = Input::get('finish');
                 $event->img = $archivo;
                 $event->descript = Input::get('descript');
+                $event->where = Input::get('where');
+                $event->contact = Input::get('contact');
+                if(Input::has('repeat')){
+                    $event->repeat = 1;
+                    $event->day = Input::get('day');
+                }else{
+                    $event->day = NULL;
+                }
                 $event->save();
                 Session::flash('message', "สร้าง ".Input::get('name')." สำเร็จ!!");
                 return Redirect::to('/admin/events/create');
@@ -122,7 +130,7 @@ class AdminController extends BaseController {
     // delete event
     public function getDeleteEvent($id){
         $del = Events::findOrFail($id);
-        $check=File::delete('/uploads/events/'.$del->img);
+        $check=File::delete('uploads/events/'.$del->img);
         $name=$del->name;
         $del->delete();
         Session::flash('message', "ลบ ".$name." สำเร็จ!!");
@@ -133,20 +141,24 @@ class AdminController extends BaseController {
         $data = Events::find($id);
         return View::make('admin.update_event')->with('event',$data);
     }
+
     public function postUpdateEvent($id){
+
         $rules = array(
             'name' => 'required|unique:events,name,'.$id,
             'img' => 'image|mimes:jpg,jpeg,png,gif',
             'type'=>'required',
             'start'=>'required',
-            'finish'=>'required'
+            'finish'=>'required',
+            'where' =>'required',
+            'contact'=>'required'
         );
 
         $validator = Validator::make(Input::all(),$rules);
         if(Input::get('start') > Input::get('finish') ){
             $messages = $validator->errors();
             $messages->add('start', 'กรุณากรอก วัน/เวลา เริ่มและสิ้นสุดกิจกรรม ให้ถูกต้อง');
-            return Redirect::to('/admin/events/create')
+            return Redirect::to('/admin/events/'.$id.'/update')
                 ->withErrors($messages)
                 ->withInput(Input::all());
         }
@@ -159,7 +171,7 @@ class AdminController extends BaseController {
             if(Input::hasFile('img')){
                 $event = Events::find($id);
                 if($event->img){
-                    File::delete('/uploads/events/'.$event->img);
+                    $d=File::delete('uploads/events/'.$event->img);
                 }
 
                 $file =Input::file('img');
@@ -175,7 +187,6 @@ class AdminController extends BaseController {
                 $check = $file->move($destinationPath, $archivo);
 
                 if($check){
-
                     //$event = new Events();
                     $event->name = Input::get('name');
                     $event->type = Input::get('type');
@@ -183,6 +194,14 @@ class AdminController extends BaseController {
                     $event->finish = Input::get('finish');
                     $event->img = $archivo;
                     $event->descript = Input::get('descript');
+                    $event->where = Input::get('where');
+                    $event->contact = Input::get('contact');
+                    if(Input::has('repeat')){
+                        $event->repeat = 1;
+                        $event->day = Input::get('day');
+                    }else{
+                        $event->day = NULL;
+                    }
                     $event->save();
                     Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/events/'.$id.'/update');
@@ -203,6 +222,15 @@ class AdminController extends BaseController {
                     $event->start = Input::get('start');
                     $event->finish = Input::get('finish');
                     $event->descript = Input::get('descript');
+                    $event->where = Input::get('where');
+                    $event->contact = Input::get('contact');
+                    if(Input::has('repeat')){
+                        $event->repeat = 1;
+                        $event->day = Input::get('day');
+                    }else{
+                        $event->repeat = 0;
+                        $event->day = NULL;
+                    }
                     $event->save();
                     Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/events/'.$id.'/update');
@@ -225,7 +253,12 @@ class AdminController extends BaseController {
     }
 
     public function getCreateLink(){
-        return View::make('admin.create_link');
+        $goverment = Gov::all();
+        $selected = array();
+        foreach($goverment as $gov) {
+            $selected[$gov->id] = $gov->name;
+        }
+        return View::make('admin.create_link')->with('goverment',$selected);
     }
     public function postCreateLink(){
 
@@ -233,7 +266,7 @@ class AdminController extends BaseController {
             //var_dump(Input::all());
             $rules = array(
                 'name' => 'required|unique:links,name',
-                'img' => 'required|image|mimes:jpg,jpeg,png,gif',
+                'img' => 'image|mimes:jpg,jpeg,png,gif',
                 'link'=>'required'
             );
             $validator = Validator::make(Input::all(), $rules);
@@ -242,30 +275,40 @@ class AdminController extends BaseController {
                     ->withErrors($validator)
                     ->withInput(Input::all());
             } else {
-                $file =Input::file('img');
-                //$fileName = $file->getClientOriginalName();
-                $archivo = value(function() use ($file){
-                    $filename = str_random(34) . '.' . $file->getClientOriginalExtension();
-                    return strtolower($filename);
-                });
-                //var_dump($archivo);
+                $check = true;
+                if(Input::hasFile('file')){
+                    $file =Input::file('img');
+                    //$fileName = $file->getClientOriginalName();
+                    $archivo = value(function() use ($file){
+                        $filename = str_random(34) . '.' . $file->getClientOriginalExtension();
+                        return strtolower($filename);
+                    });
+                    //var_dump($archivo);
 
-                $destinationPath = '/uploads/';
-                // Move file to generated folder
-                $check = $file->move($destinationPath, $archivo);
+                    $destinationPath = 'uploads/';
+                    // Move file to generated folder
+                    $check = $file->move($destinationPath, $archivo);
+                }
 
                 if($check){
                     $link = new Link();
                     $link->name = Input::get('name');
                     $link->link = Input::get('link');
                     $link->descript = Input::get('descript');
-                    $link->img = $archivo;
+                    $link->img = NULL;
+                    if(Input::hasFile('file')){
+                        $link->img = $archivo;
+                    }
+                    if(Input::get('gov')){
+                        $link->gov_id = Input::get('gov_id');
+                    }
                     if(Input::get('middlecategories')){
                         $link->middle_categories_id = Input::get('middlecategories');
                     }else{
                         $link->middle_categories_id = 3;
                     }
 
+                    $link->frequency = 0;
                     $link->save();
                     Session::flash('message', "สร้าง ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/link/create');
@@ -300,7 +343,7 @@ class AdminController extends BaseController {
 
     public function postDeleteLink($id){
         $del = Link::findOrFail($id);
-        $check=File::delete('/uploads/'.$del->img);
+        $check=File::delete('uploads/'.$del->img);
         $name=$del->name;
         $del->delete();
         Session::flash('message', "ลบ ".$name." สำเร็จ!!");
@@ -324,11 +367,17 @@ class AdminController extends BaseController {
         foreach($mdc as $mdcc){
             $middlecategories[$mdcc->id]= $mdcc->name;
         }
+        $goverment = Gov::all();
+        $selected = array();
+        foreach($goverment as $gov) {
+            $selected[$gov->id] = $gov->name;
+        }
         return View::make('admin.update_link')
             ->with('link',$link)
             ->with('usercategories',$usercategories)
             ->with('majorcategories',$majorcategories)
-            ->with('middlecategories',$middlecategories);
+            ->with('middlecategories',$middlecategories)
+            ->with('goverment',$selected);
     }
     public function postUpdateLink($id){
         $rules = array(
@@ -346,7 +395,7 @@ class AdminController extends BaseController {
             if(Input::hasFile('img')){
                 $link = Link::find($id);
                 if($link->img){
-                    File::delete('/uploads/'.$link->img);
+                    File::delete('uploads/'.$link->img);
                 }
 
                 $file =Input::file('img');
@@ -357,7 +406,7 @@ class AdminController extends BaseController {
                 });
                 //var_dump($archivo);
 
-                $destinationPath = '/uploads/';
+                $destinationPath = 'uploads/';
                 // Move file to generated folder
                 $check = $file->move($destinationPath, $archivo);
 
@@ -366,7 +415,13 @@ class AdminController extends BaseController {
                     $link->name = Input::get('name');
                     $link->link = Input::get('link');
                     $link->descript = Input::get('descript');
-                    $link->img = $archivo;
+                    $link->img = NULL;
+                    if(Input::hasFile('file')){
+                        $link->img = $archivo;
+                    }
+                    if(Input::get('gov')){
+                        $link->gov_id = Input::get('gov_id');
+                    }
                     if(Input::get('middlecategories')){
                         $link->middle_categories_id = Input::get('middlecategories');
                     }else{
@@ -398,8 +453,13 @@ class AdminController extends BaseController {
                         $link->middle_categories_id = 3;
                     }
 
+                    if(Input::get('gov')){
+                        $link->gov_id = Input::get('gov_id');
+                    }
+
+
                     $link->save();
-                    Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ1!!");
+                    Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/link/'.$id.'/update');
                 }
             }
@@ -407,6 +467,17 @@ class AdminController extends BaseController {
 
 
         }
+    }
+
+    public function getShowEvent($id){
+        $event = Events::find($id);
+        $columns = Schema::getColumnListing('events');
+        return View::make('admin.show_event')->with('event',$event)->with('columns',$columns);
+    }
+    public function getShowLink($id){
+        $link = Link::find($id);
+        $columns = Schema::getColumnListing('links');
+        return View::make('admin.show_link')->with('link',$link)->with('columns',$columns);
     }
 
 

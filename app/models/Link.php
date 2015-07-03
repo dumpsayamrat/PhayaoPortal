@@ -10,7 +10,7 @@ class Link extends Eloquent {
 
     use \Elasticquent\ElasticquentTrait;
 
-    public $timestamps = false;
+    public $timestamps = true;
     protected $table = 'links';
     //public $fillable = ['name', 'link', 'descript'];
 
@@ -19,13 +19,8 @@ class Link extends Eloquent {
             'type' => 'string',
             'analyzer'=>'thai'
         ],
-        'img' => [
-            'type' => 'string',
-            'analyzer'=>'thai'
-        ],
         'link' => [
             'type' => 'string',
-            'analyzer'=>'thai'
         ],
         'middle_categories_id'=> [
             'type'=>'long'
@@ -62,5 +57,9 @@ class Link extends Eloquent {
     public function MiddleCategories()
     {
         return $this->belongsTo('MiddleCategories');
+    }
+    public function Gov()
+    {
+        return $this->belongsTo('Gov');
     }
 }

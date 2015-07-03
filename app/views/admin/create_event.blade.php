@@ -46,7 +46,7 @@
 
 
     <div class="required field">
-        {{ Form::label('type','หมวดหมู่รอง') }}
+        {{ Form::label('type','หมวดหมู่') }}
         <select class="ui dropdown" name="type" id="type">
             <option value="">---เลือก---</option>
             <option value="1">มหาวิทยาลัย</option>
@@ -54,7 +54,7 @@
         </select>
     </div>
 
-    <div class="two fields">
+    <div class="ui two fields segment">
         <div class="required field">
             {{ Form::label('start','วัน/เวลา เริ่มกิจกรรม') }}
             {{ Form::text('start',null,['id'=>'start','autocomplete'=>'off']) }}
@@ -63,8 +63,35 @@
             {{ Form::label('finish','วัน/เวลา สิ้นสุดกิจกรรม') }}
             {{ Form::text('finish',null,['id'=>'finish','autocomplete'=>'off']) }}
         </div>
+        <div class="ui field segment">
+            <div class="ui checkbox">
+                <input id="repeat" type="checkbox" name="repeat">
+                <label>วนซ้ำ</label>
+            </div>
+            <div id="day" style="display: none" class="ui field segment">
+                {{ Form::label('day','เลือกวัน') }}
+                {{ Form::select('day', array(
+                    'วันอาทิตย์' => 'วันอาทิตย์',
+                    'วันจันทร์' => 'วันจันทร์',
+                    'วันอังคาร' => 'วันอังคาร',
+                    'วันพุธ' => 'วันพุธ',
+                    'วันพฤหัสบดี' => 'วันพฤหัสบดี',
+                    'วันศุกร์' => 'วันศุกร์',
+                    'วันเสาร์' => 'วันเสาร์',), 'วันอาทิตย์',array('class' => 'ui dropdown')) }}
+            </div>
+        </div>
     </div>
 
+    <div class="two fields">
+        <div class="field">
+            {{ Form::label('where','สถานที่') }}
+            {{ Form::text('where',null,['id'=>'where','autocomplete'=>'off']) }}
+        </div>
+        <div class="field">
+            {{ Form::label('contact','ติดต่อ') }}
+            {{ Form::text('contact',null,['id'=>'contact','autocomplete'=>'off']) }}
+        </div>
+    </div>
     <div class="field">
         {{ Form::label('descript','คำอธิบาย') }}
         {{ Form::textarea('descript') }}
@@ -85,6 +112,16 @@
             lang:'th',
             theme:'dark',
             mask:true
+        });
+       $(document).on('ready', function() {
+
+            $('#repeat').change(function(){
+                if($('#repeat').is(':checked')){
+                    $('#day').fadeIn('slow');
+                }else{
+                    $('#day').fadeOut('slow');
+                }
+            });
         });
 
     </script>

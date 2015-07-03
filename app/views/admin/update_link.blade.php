@@ -35,7 +35,7 @@
     </style>
     {{-- <div class="ui page grid">--}}
 
-    <h1><i class="big settings teal icon"></i> แก้ไขจุดเชื่อมต่อภายนอก |<h3>{{ $link->name }}</h3> </h1>
+    <h1><i class="big settings teal icon"></i> แก้ไขจุดเชื่อมโยง |<h3>{{ $link->name }}</h3> </h1>
 
     {{ Form::open(array('url' => '/admin/link/'.$link->id.'/update','class' => 'ui warning form teal segment','files'=>true)) }}
     @if(!$errors->isEmpty())
@@ -50,11 +50,11 @@
     @endif
     <div class="two fields">
         <div class="required field">
-            {{ Form::label('name','ชื่อจุดเชื่อมต่อภายนอก') }}
-            {{ Form::text('name',$link->name,['placeholder'=>'ชื่อจุดเชื่อมต่อภายนอก']) }}
+            {{ Form::label('name','ชื่อจุดเชื่อมโยง') }}
+            {{ Form::text('name',$link->name,['placeholder'=>'ชื่อจุดเชื่อมโยง']) }}
         </div>
         <div class="required field">
-            {{ Form::label('link','ที่อยู่จุดเชื่อมต่อภายนอก') }}
+            {{ Form::label('link','ที่อยู่จุดเชื่อมโยง') }}
             {{ Form::text('link',$link->link,['placeholder'=>'Link address']) }}
         </div>
     </div>
@@ -86,18 +86,27 @@
         </select>--}}
         <a id="add_mdc" class="ui tag blue label">จัดการ</a>
     </div>
-
+    <div class="ui field segment">
+        <div class="ui checkbox">
+            <input id="gov" type="checkbox" name="gov" {{$link->gov_id==NULL ? '' : 'checked'}} />
+            <label>เลือกหน่วยงาน</label>
+        </div>
+        <div id="gov_id" style="display: none" class="ui field segment">
+            {{ Form::label('gov_id','เลือกหน่วยงาน') }}
+            {{ Form::select('gov_id',$goverment,$link->gov_id != NULL ? $link->gov_id : '',array('class' => 'ui dropdown')) }}
+        </div>
+    </div>
     <div class="field">
         {{ Form::label('descript','คำอธิบาย') }}
         {{ Form::textarea('descript',$link->descript) }}
     </div>
 
-    <div class="field">
+    {{--<div class="field">
 
         {{ Form::label('img','รูปภาพ') }}<br />
         <img style="max-width: 100px" src="/uploads/{{ $link->img == '' ? 'blank.png' : $link->img  }}">
         {{ Form::file('img') }}
-    </div>
+    </div>--}}
     {{ Form::submit('บันทึก',array('class'=>'ui submit teal button')) }}
 
     {{ Form::close() }}
@@ -307,5 +316,18 @@
     {{--</div>--}}
 @stop
 @section('javascript')
-
+    <script>
+        $(document).on('ready', function() {
+            if($('#gov').is(':checked')){
+                $('#gov_id').fadeIn('slow');
+            }
+            $('#gov').change(function(){
+                if($('#gov').is(':checked')){
+                    $('#gov_id').fadeIn('slow');
+                }else{
+                    $('#gov_id').fadeOut('slow');
+                }
+            });
+        });
+    </script>
 @stop

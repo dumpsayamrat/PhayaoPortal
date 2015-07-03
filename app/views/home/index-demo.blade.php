@@ -9,8 +9,8 @@
 @section('content')
 
 <div id="title" class="slide header">
-    <div class="gov" id="3rd">
-        <div class="container">
+    <div class="container">
+        <div class="gov" id="e-services">
             <div class="row terminal">
                 <div class="col-md-12" style="padding-left: 1px;padding-right: 1px">
                     <div class="title-top">
@@ -18,14 +18,14 @@
                             <div style="float: left" class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><i class="fa fa-university fa-border hi-icon"></i></div>
                             <h2 style="float: left;  margin-top: 35px;">หน่วยงานราชการ</h2>
                         </div>
-                        <ul style="list-style: none; float: left;" class="nav-tabs" role="tablist" id="myTab">
+                        <ul style="list-style: none; float: left;  padding: 0px 0px 0px 20px;" class="nav-tabs" role="tablist" id="myTab">
                             @foreach($ucs as $data)
                                 @if($data->name == "หน่วยงานราชการ")
                                     <?php $g=0;?>
                                     @foreach($data->MajorCategories as $mjc) <?php $g++;?>
                                     <li role="presentation" class="{{ $g==1 ? 'active' : '' }}"  data-toggle="tooltip" data-placement="bottom" title="{{$mjc->name}}">
                                         <a class="a-tab" href="#tab_{{$g}}" role="tab" data-toggle="tab">
-                                            <img src="images/gov_{{$g}}.png" /></a>
+                                            <img src="images/gov_{{$g}}.png" /><div class="title-tab">{{$mjc->name}}</div></a>
                                     </li>
                                     @endforeach
                                 @endif
@@ -65,6 +65,7 @@
                                                                 </a>
                                                             </div>
                                                         @endforeach
+                                                        <div class="clearfix"></div>
                                                     </div>
                                                     <?php $h++;?>
                                                 @endforeach
@@ -83,13 +84,13 @@
 </div>
 
 <div id="slide1" class="slide">
-    <div id="2nd" style="margin-bottom: 10px">
-        <div class="container">
+    <div class="container" id="trip" style="margin-bottom: 10px">
+        <div class="travel">
             <div class="row terminal">
                 <div class="col-md-12" style="padding-left: 1px;padding-right: 1px">
                     <div class="title-top">
                         <div class="title">
-                            <div style="float: left" class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><i class="fa fa-suitcase fa-border hi-icon"></i></div>
+                            <div style="float: left" class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><i class="fa i-travel fa-border hi-icon"></i></div>
                             <h2 style="float: left;  margin-top: 35px;">ท่องเที่ยว</h2>
                         </div>
                     </div>
@@ -100,6 +101,29 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div class="tab-pane active">
+                                        <h3 class="color11">
+                                            <a>แนะนำ</a>
+                                        </h3>
+                                        <div class="row">
+                                            @foreach($recommends as $link )
+                                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                        <a href="{{$link->link}}" target="_blank">
+                                                            <div class="media">
+                                                                {{--<div class="media-left pull-left">
+                                                                    <img class="media-object" src="/uploads/{{$link->img}}" alt="{{$link->name}}">
+                                                                </div>--}}
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading">{{$link->name}}</h4>
+                                                                    <small class="">-{{$link->descript}}</small>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                            @endforeach
+                                        </div>
+                                        <h3 class="color0">
+                                            <a>ท่องเที่ยว</a>
+                                        </h3>
                                         @foreach($ucs as $data)
                                             @if($data->name=="ท่องเที่ยว")
                                                 @foreach($data->MajorCategories as $mjc)
@@ -139,8 +163,8 @@
     </div>
 </div>
 <div id="slide2" class="slide">
-    <div class="uni" id="1st">
-        <div class="container">
+    <div class="container"  id="up">
+        <div class="uni">
             <div class="row terminal">
                 <div class="col-md-12" style="padding-left: 1px;padding-right: 1px">
                     <div class="title-top">
@@ -148,18 +172,18 @@
                             <div style="float: left" class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><i class="fa fa-graduation-cap fa-border hi-icon"></i></div>
                             <h2 style="float: left;  margin-top: 35px;">มหาวิทยาลัยพะเยา</h2>
                         </div>
-                        <ul style="list-style: none; float: left;  margin: 5px 0 0 30px!important;" class="nav-tabs" role="tablist" id="myTab">
+                        <ul style="list-style: none; float: left;  margin: 5px 0 0 0px!important;" class="nav-tabs" role="tablist" id="myTab">
                             <li role="presentation" class="active"  data-toggle="tooltip" data-placement="bottom" title="ทั่วไป">
                                 <a class="a-tab" href="#tab_genaral" role="tab" data-toggle="tab">
-                                    <img src="images/uni1.png" /></a>
+                                    <img src="images/uni1.png" /><div class="title-tab">ทั่วไป</div></a>
                             </li>
                             <li role="presentation"  data-toggle="tooltip" data-placement="bottom" title="ผู้สนใจเข้าศึกษา">
                                 <a class="a-tab" href="#tab_student" aria-controls="student" role="tab" data-toggle="tab">
-                                    <img src="images/uni2.png" /></a>
+                                    <img src="images/uni2.png" /><div class="title-tab">ผู้สนใจเข้าศึกษา</div></a>
                             </li>
                             <li role="presentation"  data-toggle="tooltip" data-placement="bottom" title="บุคคลภายยนอก">
                                 <a class="a-tab" href="#tab_personel" aria-controls="personel" role="tab" data-toggle="tab">
-                                    <img src="images/uni3.png" /></a>
+                                    <img src="images/uni3.png" /><div class="title-tab">บุคคลภายยนอก</div></a>
                             </li>
                             {{--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>--}}
                         </ul>

@@ -10,13 +10,31 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+use \Elasticquent\ElasticquentResultCollection as ResultCollection;
 
 Route::get('/admin/login','SessionsController@login');
 Route::get('/admin/logout','SessionsController@destroy');
 Route::resource('sessions', 'SessionsController');
 
 Route::get('/','HomeController@getIndex');
+Route::get('/events','HomeController@getEvents');
+Route::get('/events/{id}/show','HomeController@getEvent');
 Route::post('/addfrequency','HomeController@postFrequency');
+Route::get('/addfrequency',function(){
+    App::abort(404);
+});
+Route::get('/search/str/{terms}/keywords_top','HomeController@getAutoSearch');
+
+Route::get('/s',function(){
+    if(Input::has('q')){
+        return View::make('hello');
+
+    }
+
+    App::abort(404);
+    //throw new Exception('4041');
+
+});
 
 Route::get('/older', function()
 {
@@ -193,9 +211,36 @@ Route::get('/older', function()
 
 Route::get('/search',function(){
     if(Request::ajax()){
-        $query = Input::get('term');
-        $res   = Link::where('name', 'LIKE', "%$query%")->get();
-        return Response::json($res);
+        if(Input::has('term')){
+            $strQuery = Input::get('term');
+        }else {
+            $strQuery ="";
+        }
+
+
+        $client = new \Elasticsearch\Client();
+
+        $params = array(
+            'index' => 'portal',
+            'type'  => 'links'
+        );
+        $params['body']['query']['query_string']['fields'] = ["name","descript","link"];
+        $params['body']['query']['query_string']['query'] = "*$strQuery* OR $strQuery";
+        $params['body']['query']['query_string']['analyzer'] = 'thai';
+        $params['analyzer'] = "thai";
+        $params['size'] = 20;
+        //$params['analyzer'] = 'thai';
+        //$result =$client->mlt($params);
+        $result = $client->search($params);
+        $result = new ResultCollection($result, $instance = new Link());
+        foreach ($result as $query)
+        {
+            $results[] = [ 'id' => $query->id, 'value' => $query->name,'link'=>$query->link ];
+        }
+        return Response::json($results);
+        //return View::make('test')->with('result',$result);
+    }else{
+        App::abort(404);
     }
 });
 
@@ -273,12 +318,13 @@ Route::get('/test',function(){
     return View::make('home.search')->with('links',$result['hits']['hits'])->with('events',$events);
 });
 
-use \Elasticquent\ElasticquentResultCollection as ResultCollection;
+
 
 Route::get('/test2',function(){
 
     //$result=Link::search("*พะเยา*");
     //dd($result);
+
     if(Input::has('query')){
         $strQuery = Input::get('query');
     }else {
@@ -300,23 +346,36 @@ Route::get('/test2',function(){
     //$result =$client->mlt($params);
     $result = $client->search($params);
     $result = new ResultCollection($result, $instance = new Link());
+    /*foreach ($result as $query)
+    {
+        $results[] = [ 'id' => $query->id, 'value' => $query->name,'link'=>$query->link ];
+    }*/
     return View::make('test')->with('result',$result);
-
 
 });
 
 Route::get('/test3',function(){
-
-    if(Input::has('query')){
+    //$r = DB::table('links')->get(array('links.name','links.link'));
+    /*$r->add*/
+    //Link::addAllToIndex();
+    //Link::rebuildMapping();
+    /*$r = DB::table('links')->get(array('links.name','links.link'));
+    dd($r);
+    return $r = DB::table('links')->lists('name', 'descript');*/
+    /*Link::rebuildMapping();*/
+    /*if(Input::has('query')){
         $strQuery = Input::get('query');
     }else {
         $strQuery ="";
     }
+    //$books = Book::search('Moby Dick')->get();//echo $books->totalHits();
     $result = Link::search("*$strQuery*");
-    return View::make('test')->with('result',$result);
+    //return $result->totalHits();
+    return View::make('test')->with('result',$result);*/
 });
 /***EVENTS***********/
 Route::get('/admin/events/manage','AdminController@getManageEvent');
+Route::get('/admin/events/{id}/show','AdminController@getShowEvent');
 //create
 Route::get('/admin/events/create','AdminController@getCreateEvent');
 Route::post('/admin/events/create','AdminController@postCreateEvent');
@@ -327,8 +386,35 @@ Route::post('/admin/events/{id}/update','AdminController@postUpdateEvent');
 Route::get('/admin/events/{id}/delete','AdminController@getDeleteEvent');
 /*stop*/
 
+/***GOV********/
+Route::get('/admin/gov/manage','GovController@getManageGov');
+Route::get('/admin/gov/{id}/show','GovController@getShowGov');
+//create
+Route::get('/admin/gov/create','GovController@getCreateGov');
+Route::post('/admin/gov/create','GovController@postCreateGov');
+//update
+Route::get('/admin/gov/{id}/update','GovController@getUpdateGov');
+Route::post('/admin/gov/{id}/update','GovController@postUpdateGov');
+//delete
+Route::get('/admin/gov/{id}/delete','GovController@getDeleteGov');
+/*stop*/
+
+/***recommends********/
+Route::get('/admin/recommend/manage','RecommendController@getManageRecommend');
+Route::get('/admin/recommend/{id}/show','RecommendController@getShowRecommend');
+//create
+Route::get('/admin/recommend/create','RecommendController@getCreateRecommend');
+Route::post('/admin/recommend/create','RecommendController@postCreateRecommend');
+//update
+Route::get('/admin/recommend/{id}/update','RecommendController@getUpdateRecommend');
+Route::post('/admin/recommend/{id}/update','RecommendController@postUpdateRecommend');
+//delete
+Route::get('/admin/recommend/{id}/delete','RecommendController@getDeleteRecommend');
+/*stop*/
+
 
 Route::get('/admin/manage','AdminController@getManage');
+Route::get('/admin/link/{id}/show','AdminController@getShowLink');
 //create link
 Route::get('/admin/link/create','AdminController@getCreateLink');
 Route::post('/admin/link/create','AdminController@postCreateLink');
