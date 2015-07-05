@@ -458,7 +458,11 @@ class AdminController extends BaseController {
                     }
 
 
+
+
                     $link->save();
+                    /* @var \Elasticquent\ElasticquentTrait $link */
+                    $link->reindex();
                     Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/link/'.$id.'/update');
                 }
@@ -476,8 +480,15 @@ class AdminController extends BaseController {
     }
     public function getShowLink($id){
         $link = Link::find($id);
+        if(isset($link->gov_id)){
+            $gov = Gov::findOrFail($link->gov_id);
+            $gov = $gov->name;
+        }else{
+            $gov = "ไม่ได้กำหนดหน่วยงาน";
+        }
+
         $columns = Schema::getColumnListing('links');
-        return View::make('admin.show_link')->with('link',$link)->with('columns',$columns);
+        return View::make('admin.show_link')->with('link',$link)->with('columns',$columns)->with('govName',$gov);
     }
 
 

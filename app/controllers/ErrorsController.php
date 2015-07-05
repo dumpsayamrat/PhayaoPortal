@@ -30,7 +30,7 @@ class ErrorsController extends BaseController {
                 break;
 
             default:
-                $this->layout->content = View::make('errors.500');
+                $this->layout->content = View::make('errors.404');
                 break;
         }
     }

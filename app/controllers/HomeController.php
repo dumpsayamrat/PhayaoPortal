@@ -310,6 +310,12 @@ class HomeController extends BaseController {
             //$result =$client->mlt($params);
             $results = $client->search($params);
             $results = new ResultCollection($results, $instance = new Link());
+
+            for($i=0;$i<$results->count();$i++){
+                $results[$i]->MiddleCategories->MajorCategories->UserCategories;
+            }
+           dd($results);
+
             Session::flash('search',$terms);
             return View::make('home.ajax-search')->with('results',$results);
         }else {

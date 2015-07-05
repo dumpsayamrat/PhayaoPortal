@@ -16,9 +16,11 @@
             <div class="ui grid">
                 <div class="sixteen wide column">
                     @foreach($columns as $column)
-                        @if($column!='gov_id'&&$column!='img')
+                        @if($column!='img')
                             @if($column == 'descript')
                                 <h3 class="description">{{$column}}ion :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$link->$column}}</b></h3>   <div class="clearing"></div>
+                            @elseif($column=='gov_id')
+                                <h3 class="description">goverment :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$govName}}</b></h3>   <div class="clearing"></div>
                             @else
                                 <h3 class="description">{{$column}} :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$link->$column}}</b></h3>   <div class="clearing"></div>
                             @endif

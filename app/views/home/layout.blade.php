@@ -36,7 +36,7 @@
         </a>
         </div>
         <div class="weather" id="weather">
-            <a href="https://weather.yahoo.com/thailand/phayao/phayao-1226090/" class="currently">
+            <a href="https://weather.yahoo.com/thailand/phayao/phayao-1226090/" class="currently" target="_blank">
                 <div class="icon current-icon icon-27"></div>
                 <div class="current-conditions">
                     <div class="current-loc"> พะเยา,ประเทศไทย </div>
@@ -135,35 +135,14 @@
         </li>
     </ul>
 </div>
-<div id="layout-content" class="layout-content">
-@yield('content')
-</div>
-<ul class="menu-button">
-    {{--<a class="menu menu-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}">
-        <li class="menu-item">
-            --}}{{----}}{{--
-            <img class="menu-img" src="/images/gov1.png">
-            <span href="#e-services" class="menu-title">หน่วยงานราชการ</span>
-            --}}{{--as--}}{{--
-        </li>
-    </a>
-    <a class="menu menu-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}">
-    <li class="menu-item ">
-        --}}{{----}}{{--
-            <img class="menu-img" src="/images/traveler2.png">
-            <span href="#trip" class="menu-title">ท่องเที่ยว</span>
-        --}}{{----}}{{--
-    </li>
-    </a>
 
-    <a class="menu menu-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}">
-        <li class="menu-item">
-            --}}{{----}}{{--
-            <img class="menu-img" src="/images/university3.png">
-            <span href="#e-services" class="menu-title">มหาวิทยาลัย</span>
-            --}}{{--as--}}{{--
-        </li>
-    </a>--}}
+<div id="layout-content" class="layout-content">
+
+    @yield('content')
+
+</div>
+
+<ul class="menu-button">
     <li id="back-top" class="menu-item">
         <i class="fa fa-arrow-up fa-2x"></i>
     </li>
@@ -219,8 +198,6 @@
                         {
                             url: root+'/search/str/'+ui.item.value+'/keywords_top',
                             type: 'GET'
-                            //dataType: 'html',
-                            //data: {id: selected}
                         }).done(
                         function(data)
                         {                        //console.log( data );
@@ -235,26 +212,28 @@
     }
 
     $(document).on('ready', function(event) {
-        //runAutoComplete();
-        /*//* submit search  */
+        /*up to date url path*/
+        checkUrl();
+
+        /* search when submit */
         $('#auto-search').submit(function(e){
-            $('.ui-autocomplete').css("display","none");
-            $.ajax(
-                    {
-                        url: root+'/search/str/'+e.currentTarget[1].value+'/keywords_top',
-                        type: 'GET'
-                        //dataType: 'html',
-                        //data: {id: selected}
-                    }).done(
-                    function(data)
-                    {
-                        $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
-                    }
+        $('.ui-autocomplete').css("display","none");
+        $.ajax(
+                {
+                    url: root+'/search/str/'+e.currentTarget[1].value+'/keywords_top',
+                    type: 'GET'
+                    //dataType: 'html',
+                    //data: {id: selected}
+                }).done(
+                function(data)
+                {
+                    $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
+                }
             );
             e.preventDefault();
         });
 
-        /* search autocomplete */
+        /* search autocomplete when key press*/
         $('input[type=search]').focus(function()
         {
                 $('input[type=search]').on('keypress keyup',function(e){
@@ -282,24 +261,20 @@
                                                 }).done(
                                                 function(data)
                                                 {
-                                                    $('#tab-gov').click(function(){
+                                                    $('#tab-gov').click(function(e){
                                                         window.location.href = root+"/?#e-services";
-                                                        //window.location.replace();
                                                     });
                                                     $('#tab-travel').click(function(){
                                                         window.location.href = root+"/?#trip";
-                                                        //window.location.replace();
                                                     });
                                                     $('#tab-uni').click(function(){
                                                         window.location.href = root+"/?#up";
-                                                        //window.location.replace();
                                                     });
                                                     $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
                                                     $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
                                                     $('input[type=search]').on('keypress keyup',function(e){
                                                         $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
                                                     });
-                                                    //console.log(root+'/search/str/-11111/keywords_top');
 
                                                 }
                                         );
@@ -308,16 +283,9 @@
                             );
 
                     }
-                    if(e.keyCode==8&&!this.value ){
-                        //console.log( "backspace" );
-                    }
+                    if(e.keyCode==8&&!this.value ){}
                     input=1;
 
-                    /* */
-
-                    /* if(e.keyCode==8){
-                     console.log( "backspaceeeeeeeeeeeeeeeeeeeeeeeeeeeee" );
-                     }*/
                 });
 
         });
@@ -372,89 +340,7 @@
             'หิมะ',
             'ฝนฟ้าคะนอง'
     ];
-  /*  $(document).ready(function () {
-        $('#toggle-search-menu').on('click', function(event){
-            event.preventDefault();
-            // create menu variables
-            var slideoutMenu = $('.slideout-menu');
-            var slideoutMenuWidth = $('.slideout-menu').width();
 
-            // toggle open class
-            slideoutMenu.toggleClass("open");
-
-            // slide menu
-            if (slideoutMenu.hasClass("open")) {
-                slideoutMenu.animate({
-                    left: "0px"
-                });
-            } else {
-                slideoutMenu.animate({
-                    left: -slideoutMenuWidth
-                }, 250);
-            }
-            $('html, body').animate({scrollTop:0}, 'slow');
-            var isMobile = window.matchMedia("only screen and (max-width: 760px)");
-
-            if (!isMobile.matches) {
-                $('menu-button-form, #toggle-search').toggleClass('open');
-            }else{
-                $('#search-form, #toggle-search').toggleClass('open show');
-            }
-
-            $('#search-form input[type=search]').select();
-            return false;
-        });
-        $('.slideout-menu-toggle').on('click', function(event){
-            event.preventDefault();
-            // create menu variables
-            var slideoutMenu = $('.slideout-menu');
-            var slideoutMenuWidth = $('.slideout-menu').width();
-
-            // toggle open class
-            slideoutMenu.toggleClass("open");
-
-            // slide menu
-            if (slideoutMenu.hasClass("open")) {
-                slideoutMenu.animate({
-                    left: "0px"
-                });
-            } else {
-                $('.menu-button').css('display','block');
-                slideoutMenu.animate({
-                    left: -slideoutMenuWidth
-                }, 250);
-            }
-
-        });
-        $('.menu-button').on('click', function(event){
-            event.preventDefault();
-            // create menu variables
-            var slideoutMenu = $('.slideout-menu');
-            var slideoutMenuWidth = $('.slideout-menu').width();
-
-            // toggle open class
-            slideoutMenu.toggleClass("open");
-
-            // slide menu
-            if (slideoutMenu.hasClass("open")) {
-                $(this).css('display','none');
-                slideoutMenu.animate({
-                    left: "0px"
-                });
-            } else {
-                slideoutMenu.animate({
-                    left: -slideoutMenuWidth
-                }, 250);
-            }
-        });
-
-    });*/
-    /*$(document).on('click',function(event) {
-        var target = $(event.target);
-        if (!target.is('.slideout-menu')) {
-            $('.slideout-menu').toggleClass('open');
-        }
-    });*/
     // Custom autocomplete instance.
     $.widget( "app.autocomplete", $.ui.autocomplete, {
 
@@ -485,9 +371,6 @@
     });
     $(document).on('ready', function(event) {
         $('a[target=_blank]').click(function(e){
-
-            var root = location.protocol + '//' + location.host;
-            //alert(root+'/addfrequency1');
             $.ajax({
                 url:root+'/addfrequency',
                 data : { link:e.currentTarget.href},
@@ -566,11 +449,13 @@
                 }
             }
         });
+
         // parallax header
         $(window).scroll( function(){
             var scroll = $(window).scrollTop(), slowScroll = scroll/2;
             $('.head-logo').css({ transform: "translateY(" + slowScroll + "px)" });
         });
+
         // sticky nav
         var nav      = $('nav');
         var content  = $('.layout-content');
@@ -615,45 +500,7 @@
         });
 
     });
-    /*(function($) {
 
-        // Handle click on toggle search button
-        $('#toggle-search').click(function() {
-            $('#search-form, #toggle-search').toggleClass('open');
-            $('#search-form input[type=search]').select();
-            return false;
-        });
-
-        // Handle click on search submit button
-        $('#search-form input[type=submit]').click(function() {
-            $('#search-form, #toggle-search').toggleClass('open');
-            return true;
-        });
-
-        // Clicking outside the search form closes it
-        $(document).on('click',function(event) {
-            var target = $(event.target);
-
-            if (!target.is('#toggle-search') && !target.closest('#search-form').size()) {
-                $('#search-form, #toggle-search').removeClass('open show');
-            }
-        });
-        $(window).resize(function(){
-            var target = $(event.target);
-            var isMobile = window.matchMedia("only screen and (max-width: 760px)");
-
-            if (!isMobile.matches) {
-                $('#search-form, #toggle-search').removeClass('open show');
-            }
-
-        });
-        $('#search-collapse').click(function(){
-                $('#search-form, #toggle-search').toggleClass('open show');
-                 $('#search-form input[type=search]').select();
-                return false;
-        });
-
-    })(jQuery);*/
     $('#myTab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
@@ -708,6 +555,17 @@
         });
 
     };
+
+    function checkUrl(){
+        if($(location).attr('href')==root+"/?#e-services"){
+            window.history.pushState("object or string", "Title", "/#e-services");
+        }else if($(location).attr('href')==root+"/?#trip"){
+            window.history.pushState("object or string", "Title", "/#trip");
+        }else if($(location).attr('href')==root+"/?#up"){
+            window.history.pushState("object or string", "Title", "/#up");
+        }
+
+    }
 
 
 

@@ -1955,7 +1955,7 @@ a.menu-uni:hover>li{
     align-items: center;
     justify-content: center;
 }
-.currently:hover {
+.currently:hover , .currently:focus {
     color: white;
     cursor: pointer;
     text-decoration: none;

@@ -8,6 +8,7 @@
 ?>
 @extends('home.layout')
 @section('content')
+    <?php //print_r($results); ?>
 <div id="ajax-search" class="slide header events">
     <div style="text-align: -webkit-center" class="container">
         <div class="terminal">
