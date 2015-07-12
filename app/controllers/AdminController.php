@@ -245,10 +245,7 @@ class AdminController extends BaseController {
 
     public function getManage(){
 
-        //$data = UserCategories::all();
-        //$data = Link::orderBy('middle_categories_id', 'DESC')->get();
         $data = Link::orderBy('middle_categories_id', 'DESC')->get();
-
         return View::make('admin.admin1')->with('links',$data);
     }
 
@@ -267,7 +264,9 @@ class AdminController extends BaseController {
             $rules = array(
                 'name' => 'required|unique:links,name',
                 'img' => 'image|mimes:jpg,jpeg,png,gif',
-                'link'=>'required'
+                'link'=>'required',
+                'descript'=>'required',
+                'middlecategories'=>'required'
             );
             $validator = Validator::make(Input::all(), $rules);
             if ($validator->fails()) {
@@ -310,6 +309,8 @@ class AdminController extends BaseController {
 
                     $link->frequency = 0;
                     $link->save();
+                    /* @var \Elasticquent\ElasticquentTrait $link */
+                    $link->addToIndex();
                     Session::flash('message', "สร้าง ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/link/create');
                  }else{
@@ -343,9 +344,15 @@ class AdminController extends BaseController {
 
     public function postDeleteLink($id){
         $del = Link::findOrFail($id);
-        $check=File::delete('uploads/'.$del->img);
+        if(isset($del->img)){
+            $check=File::delete('uploads/'.$del->img);
+        }
         $name=$del->name;
         $del->delete();
+
+        Link::rebuildMapping();
+        Link::reindex();
+
         Session::flash('message', "ลบ ".$name." สำเร็จ!!");
         return Redirect::to('/admin/manage');
 
@@ -461,8 +468,9 @@ class AdminController extends BaseController {
 
 
                     $link->save();
-                    /* @var \Elasticquent\ElasticquentTrait $link */
-                    $link->reindex();
+                    Link::rebuildMapping();
+                    Link::reindex();
+
                     Session::flash('message', "แก้ไข ".Input::get('name')." สำเร็จ!!");
                     return Redirect::to('/admin/link/'.$id.'/update');
                 }

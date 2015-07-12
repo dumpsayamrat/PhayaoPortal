@@ -16,18 +16,22 @@
                 <div style="background-color: transparent;border: 0" class="terminal">
                     <div class="title-search">
                         <div class="row">
-                            <h1> กิจกรรม </h1>
+                            {{--<h1> กิจกรรม </h1>--}}
                             <div class="col-xs-12 col-sm-12 col-lg-12 nav-event">
                                 <div class="row">
                                     <div class="btn-group btn-group-justified" role="group" aria-label="..." id="event-tab">
                                         <div class="btn-group" role="group">
                                             <a class="a-tab" href="#tab_live" role="tab" data-toggle="tab">
-                                                <button id="tab_live_nav" type="button" class="btn btn-default">กำลังดำเนิน <span class="badge">{{$countEvent['live']}}</span></button>
+                                                <button id="tab_live_nav" type="button" class="btn btn-default">
+                                                    กำลังดำเนิน <span class="badge">{{$countEvent['live']}}</span>
+                                                </button>
                                             </a>
                                         </div>
                                         <div class="btn-group" role="group">
                                             <a class="a-tab" href="#tab_future" role="tab" data-toggle="tab">
-                                                <button id="tab_future_nav" type="button" class="btn btn-default">เร็วๆนี้ <span class="badge">{{$countEvent['future']}}</span></button>
+                                                <button id="tab_future_nav" type="button" class="btn btn-default">
+                                                    เร็วๆนี้ <span class="badge">{{$countEvent['future']}}</span>
+                                                </button>
                                             </a>
                                         </div>
                                     </div>

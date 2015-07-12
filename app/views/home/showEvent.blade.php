@@ -45,7 +45,8 @@
                                                     เริ่ม - {{$event->start}}<br />
                                                     สิ้นสุด - {{$event->finish}}
                                                 @else
-                                                    ทุก{{$event->day}} เริ่ม {{$event->start}}
+                                                    ทุก{{$event->day}} เริ่ม {{$event->start}} <br />
+                                                    สิ้นสุด - {{$event->finish}}
                                                 @endif
                                             </div>
                                         </div>

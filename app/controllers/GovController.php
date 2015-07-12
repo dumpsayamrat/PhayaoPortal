@@ -88,7 +88,7 @@ class GovController extends BaseController
             $gov->link = Input::get('link');
             $gov->save();
             Session::flash('message', "สร้าง ".Input::get('name')." สำเร็จ!!");
-            return Redirect::to('/admin/gov/'.$id.'/update');
+            return Redirect::to('/admin/gov/'.$id.'/update')->withInput(Input::all());
         }
     }
 

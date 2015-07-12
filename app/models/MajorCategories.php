@@ -22,7 +22,7 @@ class MajorCategories extends Eloquent {
 
     public function MiddleCategories(){
 
-        return $this->hasMany("MiddleCategories");
+        return $this->hasMany("MiddleCategories")->orderBy('name','asc');;
 
     }
 }

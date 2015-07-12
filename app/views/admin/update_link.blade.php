@@ -94,6 +94,7 @@
         <div id="gov_id" style="display: none" class="ui field segment">
             {{ Form::label('gov_id','เลือกหน่วยงาน') }}
             {{ Form::select('gov_id',$goverment,$link->gov_id != NULL ? $link->gov_id : '',array('class' => 'ui dropdown')) }}
+            <a class="ui blue button" href="{{URL::to('/admin/gov/create')}}">เพิ่มหน่วยงาน</a>
         </div>
     </div>
     <div class="field">

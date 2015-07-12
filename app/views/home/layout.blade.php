@@ -30,10 +30,13 @@
 <header class="p-header site-header" id="header">
     <div id="headd" class="container head-logo hidden-xs">
         <div class="ct-logo">
-        <a href="http://{{ Request::getHttpHost() }}">
-            {{--<img style="max-width:35px;float: left;" class="img img-responsive" src="images/logo21.png" height="50">--}}
-            <img style="" class="img img-responsive" src="/images/logo20.png" height="50">
-        </a>
+            <a href="http://{{ Request::getHttpHost() }}">
+                {{--<img style="max-width:35px;float: left;" class="img img-responsive" src="images/logo21.png" height="50">--}}
+                <img style="" class="img img-responsive" src="/images/main-logo.png" height="50">
+                <div class="slogan">
+                    พะเยาเริ่มที่นี่
+                </div>
+            </a>
         </div>
         <div class="weather" id="weather">
             <a href="https://weather.yahoo.com/thailand/phayao/phayao-1226090/" class="currently" target="_blank">
@@ -45,6 +48,10 @@
                 </div>
             </a>
         </div>
+        <div class="feedback">
+            <a href="#">feedback</a>
+        </div>
+
     </div>
 
 
@@ -71,11 +78,31 @@
                         <li><span></span><a href="{{ Request::path()=='' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}" class="about">หน่วยงานราชการ</a></li>
                         <li><span></span><a href="{{ Request::path()=='' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}" class="portfolio">มหาวิยาลัยพะเยา</a></li>
                         <li><span></span><a href="{{ Request::path()=='' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}" class="map">ท่องเที่ยว</a></li>--}}
-                        <li><a id="tab-home" href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
-                        <li><a id="tab-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
-                        <li><a id="tab-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-                        <li><a id="tab-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
-                        <li><a href="{{'http://'.Request::getHttpHost().'/events'}}"><span class="ihome-event home">กิจกรรม</span></a></li>
+                        <li>
+                            <a class="{{Request::path()=='/' ? 'active' : ''}}" id="tab-home" href="http://{{ Request::getHttpHost() }}">
+                                <span class="home ihome-home">หน้าแรก</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="tab-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}">
+                                <span class="ihome-gov home home">หน่วยงานราชการ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="tab-travel" href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}">
+                                <span class="ihome-travel home">ท่องเที่ยว</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="tab-uni" href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}">
+                                <span class="ihome-uni home">มหาวิทยาลัยพะเยา</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{Request::path()=='events' ? 'active' : ''}}" href="{{'http://'.Request::getHttpHost().'/events'}}">
+                                <span class="ihome-event home">กิจกรรม {{$countEventLive != 0 ? '<span class="badge">'.$countEventLive.'</span>':''}}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -111,7 +138,7 @@
         <li class=""><a id="toggle-search-menu" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
     </ul>
 </div>--}}
-<div class="nav-menu">
+<div class="nav-menu hidden-xs">
     <ul class="menu">
         <li class="">
             <a class="menu-gov" href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}">
@@ -138,6 +165,24 @@
 
 <div id="layout-content" class="layout-content">
 
+    <div style="text-align: -webkit-center;height: 8vh;" class="container">
+        <div class="layout-breadcrumd">
+            @if(!Request::is('/'))
+                @if (isset($breadcrumbs))
+                    <ol class="breadcrumb">
+                        @foreach ($breadcrumbs as $breadcrumb)
+                            @if (!$breadcrumb->last)
+                                <li><a href="{{{ $breadcrumb->url }}}">{{{ $breadcrumb->title }}}</a></li>
+                            @else
+                                <li class="active">{{{ $breadcrumb->title }}}</li>
+                            @endif
+                        @endforeach
+                    </ol>
+                @endif
+            @endif
+        </div>
+    </div>
+
     @yield('content')
 
 </div>
@@ -154,8 +199,8 @@
             <div style="text-align: -webkit-center;" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                 <div class="foot-logo">
                     <a href="http://{{ Request::getHttpHost() }}">
-                        <img style="max-width: 49px;float: left;" class="img img-responsive" src="/images/Untitled.png" height="50">
-                        <img style="" class="img img-responsive" src="/images/logo12.png" height="50">
+                        <img style="max-width: 49px;float: left;" class="img img-responsive" src="/images/footer-logo1.png" height="50">
+                        <img style="" class="img img-responsive" src="/images/footer-desc-logo.png" height="50">
                     </a>
                 </div>
             </div>
@@ -163,7 +208,7 @@
                 <a href="#">เกี่ยวกับ Portal Phayao</a>
             </div>
             <div style="padding-top: 10px" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                <a href="#">นโยบายการใช้งาน</a>
+                <a href="{{URL::to('/site-index')}}">site Index</a>
             </div>
             <div style="padding-top: 10px" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                 <a href="#">ติดต่อเรา</a>
@@ -371,9 +416,10 @@
     });
     $(document).on('ready', function(event) {
         $('a[target=_blank]').click(function(e){
+            //console.log(e)
             $.ajax({
                 url:root+'/addfrequency',
-                data : { link:e.currentTarget.href},
+                data : { link:e.currentTarget.dataset.item,type:e.currentTarget.dataset.type},
                 method:'POST',
                 success:function(data){
                     //alert('done');
@@ -545,7 +591,7 @@
                     }
                 }
                 $('.current-icon').addClass('icon-' + w.code);
-                $('.current-temp').html(w.temp + ''+' ~ '+w.high + '&deg;'+ w.units.temp);
+                $('.current-temp').html(w.low + ''+' ~ '+w.high + '&deg;'+ w.units.temp);
                 $('.current-desc').html(w.currently);
             },
             error: function(error) {

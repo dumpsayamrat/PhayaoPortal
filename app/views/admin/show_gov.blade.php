@@ -18,9 +18,9 @@
                     @foreach($columns as $column)
                         @if($column!='gov_id'&&$column!='img'&&$column!='middle_categories_id ' )
                             @if($column == 'descript')
-                                <h3 class="description">{{$column}}ion :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$link->$column}}</b></h3>   <div class="clearing"></div>
+                                <h3 class="description">{{$column}}ion :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$gov->$column}}</b></h3>   <div class="clearing"></div>
                             @else
-                                <h3 class="description">{{$column}} :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$link->$column}}</b></h3>   <div class="clearing"></div>
+                                <h3 class="description">{{$column}} :&nbsp;&nbsp;&nbsp;&nbsp;<b>{{$gov->$column}}</b></h3>   <div class="clearing"></div>
                             @endif
                         @endif
                     @endforeach

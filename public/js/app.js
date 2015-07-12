@@ -10,11 +10,13 @@ $('#add_uc,#add_mjc,#add_mdc').click(function(){
     runMjc('all','#mjc');
     runMdc('all','#mdc');
 });
-$('#uc,#mjc,#mdc').on('change',function(e){
+
+
+$('#uc,#mjc,#mdc').on('change',function(e){ //When edit categories
     //console.log(e);
     var target=e.currentTarget.id;
     //var at;
-    if(target == 'mjc'){
+    if(target == 'mjc'){  // if edit's target is majorcategories
         var nameC='#user_categories_id';
         runUc(nameC);
         var at;
@@ -26,18 +28,18 @@ $('#uc,#mjc,#mdc').on('change',function(e){
                     //console.log(at);
                 }
             });
-            //var at = data[$('#'+target).val()-1].user_categories_id;
+            var t3=nameC+' option[value="'+at+'"]';
+            $(t3).attr('selected','');
+
             var t2 ="#up_form_"+target+" input[name='name']";
             var t1 ="#up_form_"+target+" input[name='id']";
             $(t1).val($('#'+target).val());
-            $(t2).val($('#'+target+' :selected').text());
+            var tmp = $('#'+target+' :selected').text().split(" ");//cut #id
+            $(t2).val(tmp[0]);
             //$(nameC).val(1);
-            var t3=nameC+' option[value="'+at+'"]';
-            //console.log(t3);
-            $(t3).attr('selected','selected');
+
         });
-        //console.log(at);
-    }else if(target == 'mdc'){
+    }else if(target == 'mdc'){ // if edit's target is middlecategories
         var nameC='#major_categories_id';
         var at;
         runMjc('all',nameC);
@@ -48,15 +50,15 @@ $('#uc,#mjc,#mdc').on('change',function(e){
                     //console.log(at);
                 }
             });
-            //var at = data[$('#'+target).val()-1].major_categories_id;
+            var t3=nameC+' option[value="'+at+'"]';
+            $(t3).attr('selected','');
             var t2 ="#up_form_"+target+" input[name='name']";
             var t1 ="#up_form_"+target+" input[name='id']";
             $(t1).val($('#'+target).val());
-            $(t2).val($('#'+target+' :selected').text());
+            var tmp =$('#'+target+' :selected').text().split(" ");//cut #id
+            $(t2).val(tmp[0]);
             //$(nameC).val(1);
-            var t3=nameC+' option[value="'+at+'"]';
-            //console.log(t3);
-            $(t3).attr('selected','selected');
+
         });
     }else if(target == 'uc'){
         var t2 ="#up_form_"+target+" input[name='name']";
@@ -64,11 +66,10 @@ $('#uc,#mjc,#mdc').on('change',function(e){
         $(t1).val($('#'+target).val());
         $(t2).val($('#'+target+' :selected').text());
     }
-    //alert(nameC);
-
-    //$(nameC+" option[value='2']").attr('selected');
 
 });
+
+
 $('#del_form_uc,#del_form_mjc,#del_form_mdc').click(function(e){
     //console.log(e);
     var target=e.currentTarget.id;
@@ -164,6 +165,8 @@ $('#form_uc').on('submit',function(e){
         }
     });
 });
+
+
 $('#form_mjc').on('submit',function(e){
     e.preventDefault();
     var form = $(this);
@@ -186,6 +189,8 @@ $('#form_mjc').on('submit',function(e){
         }
     });
 });
+
+
 $('#form_mdc').on('submit',function(e){
     e.preventDefault();
     var form = $(this);
@@ -207,13 +212,15 @@ $('#form_mdc').on('submit',function(e){
         }
     });
 });
+
+
 function runUc(name){
     $.get('/ajax-usercategory',function(data){
 
         $(name).empty();$('#majorcategories').empty();$('#middlecategories').empty();
         $(name).append('<option value="">เลือก ---</option>');
         $.each(data,function(index,ucOdj){
-            $(name).append('<option value="'+ucOdj.id+'">'+ucOdj.name+'</option>');
+            $(name).append('<option value="'+ucOdj.id+'">'+ucOdj.name+'  #'+ucOdj.id+'</option>');
         });
     });
 }
@@ -225,7 +232,7 @@ function runMjc(mjc_id,name){
 
         $(name).append('<option value="">เลือก ---</option>');
         $.each(data,function(index,Odj){
-            $(name).append('<option value="'+Odj.id+'">'+Odj.name+'</option>');
+            $(name).append('<option value="'+Odj.id+'">'+Odj.name+'  #'+Odj.id+'</option>');
         });
     });
 }
@@ -236,7 +243,7 @@ function runMdc(mdc_id,name){
         $(name).append('<option value="">เลือก ---</option>');
         $.each(data,function(index,Odj){
             //console.log('111');
-            $(name).append('<option value="'+Odj.id+'">'+Odj.name+'</option>');
+            $(name).append('<option value="'+Odj.id+'">'+Odj.name+'  #'+Odj.id+'</option>');
         });
     });
 }

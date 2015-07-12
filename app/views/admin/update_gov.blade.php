@@ -56,7 +56,7 @@
     </div>
     <div class="required field">
         {{ Form::label('link','จุดเชื่อมโยง') }}
-        {{ Form::text('link',$gov->ministry,['placeholder'=>'จุดเชื่อมโยง']) }}
+        {{ Form::text('link',$gov->link,['placeholder'=>'จุดเชื่อมโยง']) }}
     </div>
 
     {{ Form::submit('บันทึก',array('class'=>'ui submit teal button')) }}

@@ -122,7 +122,6 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider'
-        //'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider'
 
 	),
 
@@ -189,7 +188,7 @@ return array(
 		'Str'             => 'Illuminate\Support\Str',
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
-		'View'            => 'Illuminate\Support\Facades\View',
+		'View'            => 'Illuminate\Support\Facades\View'
 
 	),
 

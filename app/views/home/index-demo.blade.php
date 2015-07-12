@@ -6,6 +6,7 @@
  * Time: 17:02
  */?>
 @extends('home.layout')
+
 @section('content')
 
 <div id="title" class="slide header">
@@ -25,12 +26,15 @@
                                     @foreach($data->MajorCategories as $mjc) <?php $g++;?>
                                     <li role="presentation" class="{{ $g==1 ? 'active' : '' }}"  data-toggle="tooltip" data-placement="bottom" title="{{$mjc->name}}">
                                         <a class="a-tab" href="#tab_{{$g}}" role="tab" data-toggle="tab">
-                                            <img src="images/gov_{{$g}}.png" /><div class="title-tab">{{$mjc->name}}</div></a>
+                                            <img src="images/major/{{$mjc->id}}.png" /><div class="title-tab">{{$mjc->name}}</div></a>
                                     </li>
                                     @endforeach
                                 @endif
                             @endforeach
-                            {{--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>--}}
+                                <li role="presentation" class=""  data-toggle="tooltip" data-placement="bottom" title="หน่วยงานราชการ">
+                                    <a class="a-tab" href="#tab_gov" role="tab" data-toggle="tab">
+                                        <img src="images/gov_2.png" /><div class="title-tab">หน่วยงานราชการ</div></a>
+                                </li>
                         </ul>
                     </div>
                     <div class="clearfix"></div>
@@ -45,34 +49,48 @@
                                             @foreach($data->MajorCategories as $mjc) <?php $g++;?>
                                             <div role="tabpanel" class="tab-pane{{ $g==1 ? ' active' : '' }}" id="tab_{{$g}}">
                                                 <?php $h=0;?>
-                                                @foreach($mjc->MiddleCategories as $mdc)
-                                                    <h3 class="color{{$h}}">
-                                                        <a>{{$mdc->name}}</a>
-                                                    </h3>
-                                                    <div class="row">
-                                                        @foreach($mdc->Link as $link )
-                                                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                                                <a href="{{$link->link}}" target="_blank">
-                                                                    <div class="media">
-                                                                        {{--<div class="media-left pull-left">
-                                                                            <img class="media-object" src="/uploads/{{$link->img}}" alt="{{$link->name}}">
-                                                                        </div>--}}
-                                                                        <div class="media-body">
-                                                                            <h4 class="media-heading">{{$link->name}}</h4>
-                                                                            <small class="">-{{$link->descript}}</small>
-                                                                        </div>
+                                                <div class="row">
+                                                    @foreach($mjc->MiddleCategories as $mdc)
+                                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                            <a href="{{URL::to('/category/'.$mdc->id.'/new')}}">
+                                                                <div class="media">
+                                                                    <div class="media-left pull-left">
+                                                                        <img class="media-object" src="images/middle/{{$mdc->id}}.png" alt="">
                                                                     </div>
-                                                                </a>
-                                                            </div>
-                                                        @endforeach
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <?php $h++;?>
-                                                @endforeach
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading">{{$mdc->name}}</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <?php $h++;?>
+                                                    @endforeach
+                                                </div>
                                             </div>
                                             @endforeach
                                         @endif
                                     @endforeach
+                                        {{--หน่วยงาน--}}
+                                    <div role="tabpanel" class="tab-pane" id="tab_gov">
+                                            <div class="row">
+                                                @foreach($government as $gov)
+                                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                        <a href="{{URL::to('/government/'.$gov->id.'/show')}}">
+                                                            <div class="media">
+                                                                {{--<div class="media-left pull-left">
+                                                                    <img class="media-object" src="images/middle/{{$mdc->id}}.png" alt="">
+                                                                </div>--}}
+                                                                <div class="media-body">
+                                                                    <h4 class="media-heading">{{$gov->ministry}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @endforeach
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +125,7 @@
                                         <div class="row">
                                             @foreach($recommends as $link )
                                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                                        <a href="{{$link->link}}" target="_blank">
+                                                        <a href="{{$link->link}}" target="_blank" data-type="recommend" data-item="{{$link->id}}">
                                                             <div class="media">
                                                                 {{--<div class="media-left pull-left">
                                                                     <img class="media-object" src="/uploads/{{$link->img}}" alt="{{$link->name}}">
@@ -132,7 +150,7 @@
                                                             @foreach($mdc->Link as $link )
                                                                 @if($link->MiddleCategories->name=="ท่องเที่ยว")
                                                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                                                        <a href="{{$link->link}}" target="_blank">
+                                                                        <a href="{{$link->link}}" target="_blank" data-type="link" data-item="{{$link->id}}">
                                                                             <div class="media">
                                                                                 {{--<div class="media-left pull-left">
                                                                                     <img class="media-object" src="/uploads/{{$link->img}}" alt="{{$link->name}}">
@@ -180,7 +198,7 @@
                                     @foreach($data->MajorCategories as $mjc) <?php $g++;?>
                                     <li role="presentation" class="{{ $g==1 ? 'active' : '' }}"  data-toggle="tooltip" data-placement="bottom" title="{{$mjc->name}}">
                                         <a class="a-tab" href="#tab_up_{{$g}}" role="tab" data-toggle="tab">
-                                            <img src="images/up_{{$g}}.png" /><div class="title-tab">{{$mjc->name}}</div></a>
+                                            <img src="images/major/{{$mjc->id}}.png" /><div class="title-tab">{{$mjc->name}}</div></a>
                                     </li>
                                     @endforeach
                                 @endif
@@ -207,7 +225,7 @@
                                                     <div class="row">
                                                         @foreach($mdc->Link as $link )
                                                             <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                                                <a href="{{$link->link}}" target="_blank">
+                                                                <a href="{{$link->link}}" target="_blank" data-type="link" data-item="{{$link->id}}">
                                                                     <div class="media">
                                                                         {{--<div class="media-left pull-left">
                                                                             <img class="media-object" src="/uploads/{{$link->img}}" alt="{{$link->name}}">
