@@ -8,7 +8,7 @@
 @extends('home.layout')
 @section('content')
     <div id="title" class="slide header">
-        <div style="text-align: -webkit-center" class="container" id="e-services">
+        <div id="siteindax" style="text-align: -webkit-center" class="container" id="e-services">
             <div class="row terminal">
                 <div class="col-md-12" style="padding-left: 1px;padding-right: 1px">
                     <div class="title-top">

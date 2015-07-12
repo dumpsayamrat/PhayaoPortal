@@ -2325,7 +2325,7 @@ a.menu-uni:hover>li{
     outline: #804C0A solid 3px;
 }
 .i-travel{
-    background-image: url(http://portal.local/images/traveler2.png);
+    background-image: url('../images/traveler12.png');
     background-size: 40px;
     background-repeat: no-repeat;
 
@@ -2541,7 +2541,7 @@ a.menu-uni:hover>li{
     color:#E91E63;
     border: 2px solid #E91E63;
 }
-.btn-group{
+#siteindax .btn-group{
     width: 85%;
 }
 .btn-default.disabled{
