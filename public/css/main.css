@@ -920,6 +920,16 @@ progress::-moz-progress-bar {
     border-bottom: 1px solid transparent;
 }
 
+.uni .title-top{
+    border-bottom: 1px solid #5D2CB2!important;
+}
+.gov .title-top{
+    border-bottom: 1px solid #804C0A!important;
+}
+.travel .title-top{
+    border-bottom: 1px solid #288AC7!important;
+}
+
 
 
 /*contemt*/
@@ -2325,7 +2335,7 @@ a.menu-uni:hover>li{
     outline: #804C0A solid 3px;
 }
 .i-travel{
-    background-image: url('../images/traveler12.png');
+    background-image: url('../images/traveler2.png');
     background-size: 40px;
     background-repeat: no-repeat;
 
