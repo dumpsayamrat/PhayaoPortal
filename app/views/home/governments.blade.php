@@ -15,7 +15,7 @@
                         <div class="title-top">
                             <div class="title">
                                 <div style="float: left" class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><i class="fa fa-university fa-border hi-icon"></i></div>
-                                <h2 style="float: left;  margin-top: 35px;">หน่วยงาน</h2>
+                                <h2 style="float: left;  margin-top: 35px;">กระทรวง</h2>
                             </div>
                         </div>
                         <div class="clearfix"></div>

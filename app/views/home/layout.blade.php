@@ -74,10 +74,6 @@
 
                 <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="nav navbar-nav">
-                        {{--<li><span></span><a href="http://{{ Request::getHttpHost() }}" class="home">หน้าแรก</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}" class="about">หน่วยงานราชการ</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}" class="portfolio">มหาวิยาลัยพะเยา</a></li>
-                        <li><span></span><a href="{{ Request::path()=='' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}" class="map">ท่องเที่ยว</a></li>--}}
                         <li>
                             <a class="{{Request::path()=='/' ? 'active' : ''}}" id="tab-home" href="http://{{ Request::getHttpHost() }}">
                                 <span class="home ihome-home">หน้าแรก</span>
@@ -121,23 +117,13 @@
             <fieldset>
                 <input id="search-terms" name="search-terms" type="search" placeholder="" />
                 <button type="submit"><i class="fa fa-search"></i></button>
-                {{--<input type="submit" value="Ok" />--}}
             </fieldset>
         </form>
 
     </div>
 </div>
 
-{{--<div id="menu-slide" class="slideout-menu">
-    <h3>Menu <a href="#" class="slideout-menu-toggle"><i class="fa fa-times"></i></a></h3>
-    <ul>
-        <li><a href="http://{{ Request::getHttpHost() }}"><span class="home ihome-home">หน้าแรก</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#e-services' : 'http://'.Request::getHttpHost().'/#e-services' }}"><span class="ihome-gov home home">หน่วยงานราชการ</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#trip' : 'http://'.Request::getHttpHost().'/#trip' }}"><span class="ihome-travel home">ท่องเที่ยว</span></a></li>
-        <li><a href="{{ Request::path()=='/' ? '#up' : 'http://'.Request::getHttpHost().'/#up' }}"><span class="ihome-uni home">มหาวิทยาลัยพะเยา</span></a></li>
-        <li class=""><a id="toggle-search-menu" href="#"><span class="ihome-search home">ค้นหา</span></a></li>
-    </ul>
-</div>--}}
+
 <div class="nav-menu hidden-xs">
     <ul class="menu">
         <li class="">
@@ -260,6 +246,13 @@
         /*up to date url path*/
         checkUrl();
 
+        //up to date url path when click nav
+        $('.nav li a,.menu li a').click(function(e){
+            if($(location)[0].pathname == "/"){
+                window.history.pushState("object or string", "Title", "/"+ e.currentTarget.hash);
+            }
+        });
+
         /* search when submit */
         $('#auto-search').submit(function(e){
         $('.ui-autocomplete').css("display","none");
@@ -291,7 +284,8 @@
                                     'slow',
                                     function(){
                                         if($(window).scrollTop() == 150){
-                                            $('#headd').css("display", "none");
+                                            $('#headd').css("display","none");
+                                            $('nav').css("margin-top","0px");
                                             $(window).scrollTop(0);
                                         }
                                         runAutoComplete();
@@ -316,10 +310,10 @@
                                                         window.location.href = root+"/?#up";
                                                     });
                                                     $('#layout-content').html($(data).find('div#ajax-search')).fadeIn('slow');
-                                                    $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
+                                                    /*$('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
                                                     $('input[type=search]').on('keypress keyup',function(e){
                                                         $('#terms-search').text("ผลการค้นหา \""+$('input[type=search]').val()+"\"");
-                                                    });
+                                                    });*/
 
                                                 }
                                         );
@@ -495,11 +489,30 @@
                 }
             }
         });
-
-        // parallax header
+        var searchBar =$('#search-form').offset().top;
+        // parallax header and fixed search bar
         $(window).scroll( function(){
+            //parallax
             var scroll = $(window).scrollTop(), slowScroll = scroll/2;
             $('.head-logo').css({ transform: "translateY(" + slowScroll + "px)" });
+
+            //search-bar
+            var scrollTop = $(window).scrollTop();
+            var h = $(document).height();
+
+            if(h > 1150){
+                if(scrollTop >= searchBar){
+                    $('#search-form').addClass("fixed-search");
+                }else{
+                    $('#search-form').removeClass("fixed-search");
+                }
+            }else{
+                if(scrollTop <= searchBar){
+                    $('#search-form').removeClass("fixed-search");
+                }else{
+
+                }
+            }
         });
 
         // sticky nav
@@ -610,7 +623,6 @@
         }else if($(location).attr('href')==root+"/?#up"){
             window.history.pushState("object or string", "Title", "/#up");
         }
-
     }
 
 

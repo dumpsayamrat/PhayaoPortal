@@ -128,6 +128,10 @@ body
     border: none;
     background: transparent;
     margin-top: 4vh;
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
 }
 
 .navbar-brand p {
@@ -873,13 +877,8 @@ progress::-moz-progress-bar {
 }
  .terminal{
     margin-top: 10px;
-    //background: #ffffff;
-   // border: 1px solid;
-    //border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     -webkit-border-radius: 3px;
     position: relative;
-//margin: 0!important;
-    z-index: 99;
     -webkit-transition: box-shadow .8s ease-in-out,outline .8s ease-in-out;
 }
  .terminal .title{
@@ -2338,7 +2337,18 @@ a.menu-uni:hover>li{
     background-image: url('../images/traveler2.png');
     background-size: 40px;
     background-repeat: no-repeat;
-
+    background-position: 10px;
+}
+.i-gov{
+    background-image: url('../images/gov1.png');
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+}
+.i-uni{
+    background-image: url('../images/university3.png');
+    background-size: 43px;
+    background-repeat: no-repeat;
     background-position: 10px;
 }
 
@@ -2579,6 +2589,15 @@ a.menu-uni:hover>li{
 }
 .ct-logo a:hover{
     text-decoration: none;
+}
+.fixed-search{
+    top: 0;
+    border-width: 0 0 1px;
+    position: fixed!important;
+    right: 0;
+    left: 0;
+    z-index: 999999999!important;
+    margin-top: 0!important;
 }
 
 

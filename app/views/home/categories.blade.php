@@ -34,7 +34,7 @@
                                                     <div class="row">
                                                         @foreach($mjc->MiddleCategories as $mdc)
                                                             <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                                                                <a href="{{URL::to('/category/'.$mdc->id.'/new')}}">
+                                                                <a href="{{URL::to('/category/'.$mdc->id.'/update')}}">
                                                                     <div class="media">
                                                                         <div class="media-left pull-left">
                                                                             <img class="media-object" src="/images/middle/{{$mdc->id}}.png" alt="">

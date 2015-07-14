@@ -12,7 +12,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Portal PHAYAO | Admin</title>
+    <title>PHAYAO Portal | Admin</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="">
@@ -32,6 +32,8 @@
 
         <div class="doubling two column row">
             <div class="four wide column">
+                <img style="" class="img img-responsive" src="/images/footer-desc-logo.png" height="50" />
+                <h3>เมนู</h3>
                 <div class="ui vertical red menu">
 
                     <a class="{{ Request::path()=='admin/manage' ? 'active' : '' }} item" href="{{ URL::to('/admin/manage') }}">
@@ -70,7 +72,7 @@
                     </a>
                 </div>
             </div>
-            <div class="twelve wide column">
+            <div style="padding-top: 50px;" class="twelve wide column">
 @yield('content')
             </div>
 

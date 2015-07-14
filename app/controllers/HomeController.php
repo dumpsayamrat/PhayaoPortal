@@ -43,11 +43,10 @@ class HomeController extends BaseController {
 	public function getIndex(){
         $government = Gov::groupBy('ministry')->get();
         $this->breadcrumbs->generate();
-        return View::make('home.index-demo')
+        return View::make('home.index')
             ->with('ucs',UserCategories::all())
             ->with('recommends',Recommend::idDescending()->get())
-            ->with('government',$government);//->with('events',$events);
-		//return View::make('home.index-demo');
+            ->with('government',$government);
 	}
 
     public function getEvents(){
@@ -191,7 +190,7 @@ class HomeController extends BaseController {
                     "ธันวาคม"
                 );
                 $strMonthThai=$strMonthCut[$strMonth];
-                $event->$times[$i]="$strDay $strMonthThai $strYear เวลา $strHour:$strMinute น.";
+                $event->$times[$i]="$strDay $strMonthThai - $strDayFinish $strMonthCut[$strMonthFinish] $strYear เวลา $strHour:$strMinute น.";
                 //$event['stat'] = 'newenw';
             }
         }
@@ -266,15 +265,17 @@ class HomeController extends BaseController {
             if(Input::get('type')=='link'){
                 $link=Link::where('id', '=', Input::get('link'))->firstOrFail();
                 $link->frequency = $link->frequency+1;
+                $link->timestamps = false;
                 $link->save();
             }elseif(Input::get('type')=='recommend'){
-
                 $recommend=Recommend::where('id', '=', Input::get('link'))->firstOrFail();
                 $recommend->frequency = $recommend->frequency+1;
+                $recommend->timestamps = false;
                 $recommend->save();
             }elseif(Input::get('type')=='gov'){
                 $gov=Gov::where('id', '=', Input::get('link'))->firstOrFail();
                 $gov->frequency = $gov->frequency+1;
+                $gov->timestamps = false;
                 $gov->save();
             }
         }else{
@@ -320,15 +321,9 @@ class HomeController extends BaseController {
 
 
     public function getCategory($id){
-        $field = 'created_at';
+        $field = 'updated_at';
         $type = 'decs';
-        if(Request::is('category/*/new')){
-            $field = 'created_at';
-            $type = 'decs';
-        }elseif(Request::is('category/*/update')){
-            $field = 'updated_at';
-            $type = 'decs';
-        }elseif(Request::is('category/*/most')){
+        if(Request::is('category/*/most')){
             $field = 'frequency';
             $type = 'decs';
         }
@@ -359,7 +354,7 @@ class HomeController extends BaseController {
     public function getGovernments(){
         $governments = Gov::groupBy('ministry')->get();
 
-        $this->breadcrumbs->push('หน่วยงาน',URL::to('/governments'));
+        $this->breadcrumbs->push('กระทรวง',URL::to('/governments'));
         $this->breadcrumbs->generate();
         return View::make('home.governments')->with('governments',$governments);
     }
@@ -368,7 +363,7 @@ class HomeController extends BaseController {
         $gov = Gov::find($id);
         $government = Gov::where('ministry','=',$gov->ministry)->get();
 
-        $this->breadcrumbs->push('หน่วยงาน',URL::to('/governments'));
+        $this->breadcrumbs->push('กระทรวง',URL::to('/governments'));
         $this->breadcrumbs->push($gov->ministry,URL::to('/government/'.$id.'/show'));
         $this->breadcrumbs->generate();
         return View::make('home.government')->with('government',$government)->with('ministryName',$gov->ministry);
@@ -376,7 +371,7 @@ class HomeController extends BaseController {
     public function getGovernmentLink($id){
         $gov = Gov::find($id);
 
-        $this->breadcrumbs->push('หน่วยงาน',URL::to('/governments'));
+        $this->breadcrumbs->push('กระทรวง',URL::to('/governments'));
         $this->breadcrumbs->push($gov->ministry,URL::to('/government/'.$id.'/show'));
         $this->breadcrumbs->push($gov->name,URL::to('/government/link/'.$id.'/show'));
         $this->breadcrumbs->generate();

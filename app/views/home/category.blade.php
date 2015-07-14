@@ -17,9 +17,6 @@
 
                     @if(count($links) > 0)
                         <div class="mainCategory">
-                            <span class="label {{Request::is('category/*/new')? 'label-active' : 'label-default'}}">
-                                <a href="{{URL::to('category/'.$id.'/new')}}">มาใหม่</a>
-                            </span>
                             <span class="label {{Request::is('category/*/update')? 'label-active' : 'label-default'}}">
                                 <a href="{{URL::to('category/'.$id.'/update')}}">ปรับปรุงล่าสุด</a>
                             </span>

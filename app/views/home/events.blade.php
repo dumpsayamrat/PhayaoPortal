@@ -57,10 +57,10 @@
                                                     <div class="event-desc">
                                                         @if(!$event->repeat)
                                                             <p>{{$event->format}}</p>
-                                                            <p>{{$event->where}}</p>
+                                                            <p>@ {{$event->where}}</p>
                                                         @else
                                                             <p>ทุก{{$event->day}} เริ่ม {{$event->start}}</p>
-                                                            <p>{{$event->where}}</p>
+                                                            <p>@ {{$event->where}}</p>
                                                         @endif
                                                     </div>
                                                 </a>
